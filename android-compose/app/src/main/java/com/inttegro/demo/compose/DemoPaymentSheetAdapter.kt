@@ -17,21 +17,27 @@ object DemoPaymentSheetAdapter : PaymentSheetAdapter {
         id = "or_android_documentation",
         merchant = PaymentSheetSession.Merchant(displayName = "Kora Market"),
         amount = PaymentSheetSession.Money(value = 5_000, currency = "GHS"),
-        paymentMethods = listOf(
-            PaymentSheetSession.PaymentMethod(
-                id = "pm_demo_mtn",
-                kind = PaymentSheetSession.PaymentMethod.Kind.MOBILE_MONEY,
-                source = PaymentSheetSession.PaymentMethod.Source.SAVED,
-                label = "MTN Mobile Money",
-                detail = "••• ••• 0042",
-            ),
-            PaymentSheetSession.PaymentMethod(
+        paymentMethods = buildList {
+            if (BuildConfig.INTTEGRO_SCREENSHOT_FEATURES) {
+                add(
+                    PaymentSheetSession.PaymentMethod(
+                        id = "pm_demo_mtn",
+                        kind = PaymentSheetSession.PaymentMethod.Kind.MOBILE_MONEY,
+                        source = PaymentSheetSession.PaymentMethod.Source.SAVED,
+                        label = "MTN Mobile Money",
+                        detail = "••• ••• 0042",
+                    ),
+                )
+            }
+            add(
+                PaymentSheetSession.PaymentMethod(
                 id = "new_mobile_money",
                 kind = PaymentSheetSession.PaymentMethod.Kind.MOBILE_MONEY,
                 source = PaymentSheetSession.PaymentMethod.Source.NEW,
-                label = "Use another Mobile Money account",
-            ),
-        ),
+                    label = "Mobile Money",
+                ),
+            )
+        },
         expiresAt = Instant.now().plusSeconds(60 * 60),
         lineItems = listOf(
             PaymentSheetSession.LineItem(

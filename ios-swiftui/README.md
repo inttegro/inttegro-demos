@@ -52,14 +52,23 @@ SIMCTL_CHILD_INTTEGRO_STUDIO_SCREENSHOTS=1 \
 xcrun simctl io booted screenshot --mask alpha payment-sheet.png
 ```
 
+Before capturing the one-time-code screen, turn off **I/O → Keyboard → Connect
+Hardware Keyboard** in Simulator. The SDK focuses the first empty digit when the
+screen opens; disconnecting the Mac keyboard lets Simulator show the same
+numeric keyboard that appears automatically on a physical iPhone.
+
 The switch is compiled only in Debug builds. Release builds always use the
 SDK's live Checkout adapter.
 
-The fixture opens on the attached payment method. Choose **Change payment
-method** to capture active number entry; the SDK expands to the large detent.
-Enable **Save for next time** to capture the full personal/contact form. The
-fields are native controls and the values entered for a screenshot remain
-local to that simulator run.
+The standard fixture opens without an attached payment method, so the first
+screenshot documents the experience a new payer sees. The SDK begins at a
+compact account-entry detent that keeps **Save for next time** and the disabled
+Pay action visible. A complete account number reveals the provider choices and
+moves to a taller review detent so none of those choices are clipped. The sheet
+uses its full-height detent only for the keyboard, saved-details form, or another
+longer task. Enable **Save for next time** to capture the complete native contact
+and billing-address form. Values entered for a screenshot remain local to that
+simulator run.
 
 The screenshot fixture follows the complete native flow. Choose **Pay** to
 capture the one-time-code screen, enter any six digits and choose **Continue**

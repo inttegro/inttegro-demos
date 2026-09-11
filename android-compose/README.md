@@ -13,7 +13,7 @@ to Logcat under `InttegroPaymentSheet` without installing an exporter.
 
 <table>
   <tr>
-    <td><img src="./docs/images/payment-sheet-methods.png" alt="Attached MTN Mobile Money account in the native Android payment sheet" width="320"></td>
+    <td><img src="./docs/images/payment-sheet-methods.png" alt="Mobile Money account entry for a payer without an attached method in the native Android payment sheet" width="320"></td>
     <td><img src="./docs/images/payment-sheet-mobile-money.png" alt="Segmented Mobile Money number entry and network selection in the native Android payment sheet" width="320"></td>
   </tr>
   <tr>
@@ -56,7 +56,9 @@ Android SDK UI for documentation:
 
 This mode opens the production `InttegroPaymentSheet` automatically and injects
 only a local adapter. It does not call the Checkout API or require merchant
-credentials. Builds without the property keep the normal backend flow.
+credentials. The standard fixture starts without an attached payment method,
+so it documents the experience a new payer sees. Builds without the property
+keep the normal backend flow.
 
 Choose **Pay** to reach the one-time-code screen, enter any six digits and
 choose **Continue** to reach the approval screen, then choose **Check again** to

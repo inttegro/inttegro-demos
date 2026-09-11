@@ -263,11 +263,11 @@ struct CheckoutView: View {
             if isStudioScreenshotMode {
                 InttegroPaymentSheet(
                     configuration: configuration,
-                    adapter: StudioScreenshotPaymentSheetAdapter(),
+                    adapter: StudioScreenshotPaymentSheetAdapter(
+                        includeAttachedMethod: isStudioFeatureScreenshotMode
+                    ),
                     onCompletion: handle
                 )
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
             } else {
                 livePaymentSheet(configuration)
             }
@@ -287,14 +287,20 @@ struct CheckoutView: View {
             telemetryEventHandler: logPaymentSheetEvent,
             onCompletion: handle
         )
-        .presentationDetents([.medium, .large])
-        .presentationDragIndicator(.visible)
     }
 
     private var isStudioScreenshotMode: Bool {
 #if DEBUG
         let mode = ProcessInfo.processInfo.environment["INTTEGRO_STUDIO_SCREENSHOTS"]
         return mode == "1" || mode == "features"
+#else
+        false
+#endif
+    }
+
+    private var isStudioFeatureScreenshotMode: Bool {
+#if DEBUG
+        ProcessInfo.processInfo.environment["INTTEGRO_STUDIO_SCREENSHOTS"] == "features"
 #else
         false
 #endif
@@ -370,8 +376,30 @@ private extension Color {
 
 #if DEBUG
 private struct StudioScreenshotPaymentSheetAdapter: PaymentSheetAdapter {
+    let includeAttachedMethod: Bool
+
     func retrieveCheckout(orderID _: String) async throws -> PaymentSheetSession {
         try await Task.sleep(for: .milliseconds(250))
+        let newMobileMoneyMethod = PaymentSheetSession.PaymentMethod(
+            id: "mobile_money",
+            kind: .mobileMoney,
+            source: .new,
+            label: "Mobile Money",
+            detail: "MTN MoMo, Telecel Cash, or AirtelTigo Money"
+        )
+        let paymentMethods: [PaymentSheetSession.PaymentMethod] = if includeAttachedMethod {
+            [
+                .init(
+                    id: "momo_saved",
+                    kind: .mobileMoney,
+                    label: "MTN Mobile Money",
+                    detail: "••• ••• 0042"
+                ),
+                newMobileMoneyMethod,
+            ]
+        } else {
+            [newMobileMoneyMethod]
+        }
         return PaymentSheetSession(
             id: "or_studio_screenshot",
             merchant: .init(
@@ -379,21 +407,7 @@ private struct StudioScreenshotPaymentSheetAdapter: PaymentSheetAdapter {
                 supportText: nil
             ),
             amount: .init(value: 5_000, currency: "GHS"),
-            paymentMethods: [
-                .init(
-                    id: "momo_saved",
-                    kind: .mobileMoney,
-                    label: "MTN Mobile Money",
-                    detail: "••• ••• 0042"
-                ),
-                .init(
-                    id: "mobile_money",
-                    kind: .mobileMoney,
-                    source: .new,
-                    label: "Use another number",
-                    detail: "MTN MoMo, Telecel Cash, or AirtelTigo Money"
-                ),
-            ],
+            paymentMethods: paymentMethods,
             expiresAt: Date().addingTimeInterval(15 * 60),
             lineItems: [
                 .init(

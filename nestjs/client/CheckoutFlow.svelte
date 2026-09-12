@@ -108,6 +108,9 @@
   function handleReady() {
     surfaceMessage = ''
     setFormFeedback('')
+    modal
+      ?.querySelector<HTMLIFrameElement>('iframe')
+      ?.focus({ preventScroll: true })
   }
 
   function handleCompleted() {
@@ -251,8 +254,13 @@
       if (event.target === modal) modal?.close()
     }}
   >
-    <button class="framework-checkout-dialog-close" type="button" onclick={() => modal?.close()}>
-      <span>Close</span><span aria-hidden="true">×</span>
+    <button
+      class="framework-checkout-dialog-close"
+      type="button"
+      aria-label="Close payment window"
+      onclick={() => modal?.close()}
+    >
+      <span aria-hidden="true">×</span>
     </button>
     <Checkout
       appearance={{ theme: 'light' }}

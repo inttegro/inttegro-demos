@@ -310,20 +310,35 @@ fieldset { display: grid; gap: 9px; padding: 0; border: 0; }
 }
 
 .framework-checkout-dialog-close {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
   margin: 0 0 12px auto;
-  padding: 7px 10px;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgba(23, 59, 47, 0.08);
+  background: transparent;
   color: #173b2f;
   font: inherit;
   cursor: pointer;
+  opacity: 0.6;
+  transition: background-color 120ms ease, opacity 120ms ease;
 }
 
-.framework-checkout-dialog-close span:last-child {
-  font-size: 20px;
+.framework-checkout-dialog-close:hover {
+  background: rgba(23, 59, 47, 0.08);
+  opacity: 1;
+}
+
+.framework-checkout-dialog-close:focus-visible {
+  outline: 3px solid #173b2f;
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.framework-checkout-dialog-close span {
+  font-size: 24px;
   line-height: 1;
 }

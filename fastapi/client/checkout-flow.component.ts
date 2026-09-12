@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
-  type ElementRef,
   type AfterViewInit,
 } from '@angular/core'
 import {
@@ -70,9 +70,11 @@ type CheckoutPresentation = 'embedded' | 'modal'
         <button
           class="framework-checkout-dialog-close"
           type="button"
+          aria-label="Close payment window"
           (click)="modalDialog.close()"
-        ><span>Close</span><span aria-hidden="true">×</span></button>
+        ><span aria-hidden="true">×</span></button>
         <inttegro-checkout
+          #modalCheckout
           [appearance]="{ theme: 'light' }"
           [features]="features"
           locale="en-GH"
@@ -101,6 +103,8 @@ export class CheckoutFlowComponent implements OnInit, AfterViewInit, OnDestroy {
   surfaceMessageKind: 'status' | 'error' = 'status'
 
   @ViewChild('modalDialog') private modalDialog?: ElementRef<HTMLDialogElement>
+  @ViewChild('modalCheckout', { read: ElementRef })
+  private modalCheckout?: ElementRef<HTMLElement>
 
   private form?: HTMLFormElement
 
@@ -190,6 +194,9 @@ export class CheckoutFlowComponent implements OnInit, AfterViewInit, OnDestroy {
   handleReady(): void {
     this.surfaceMessage = ''
     this.setFormFeedback('')
+    this.modalCheckout?.nativeElement
+      .querySelector<HTMLIFrameElement>('iframe')
+      ?.focus({ preventScroll: true })
   }
 
   handleCompleted(): void {

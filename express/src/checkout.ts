@@ -30,11 +30,20 @@ export type CheckoutInput = {
 };
 
 export type CatalogSelection = {
-  type: Product['type'];
-  name: string;
-  about?: string;
-  reference?: string;
-  price: NonNullable<Product['prices']>[number]['nominal'];
+  productId: string;
+  priceId: string;
+};
+
+type CatalogBackedCreateOrderRequest = {
+  request_meta: { idempotency_key: string };
+  number: string;
+  customer_data: { name: string; email_address: string; phone_number: string };
+  finalize: true;
+  checkout_settings: { redirect_url: string; cancel_url: string };
+  line_items: Array<{
+    type: 'product';
+    product: { product_id: string; price_id: string; quantity: number };
+  }>;
 };
 
 function merchantOrderNumber(prefix: string, attemptId: string): string {
@@ -76,11 +85,8 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
     throw new DemoError('configuration_error', 'The configured demo price is not active for this product.');
   }
   return {
-    type: product.type,
-    name: product.name,
-    ...(product.about ? { about: product.about } : {}),
-    ...(product.reference ? { reference: product.reference } : {}),
-    price: price.nominal,
+    productId: product.id,
+    priceId: price.id,
   };
 }
 
@@ -88,7 +94,7 @@ export function buildOrderRequest(
   input: CheckoutInput,
   publicOrigin: string,
   product: CatalogSelection,
-): CreateOrderRequest {
+): CatalogBackedCreateOrderRequest {
   return {
     // INTTEGRO:DECISION [stable-idempotency-key] The key is stable for one
     // browser-rendered attempt. A production system persists a key derived from
@@ -119,13 +125,10 @@ export function buildOrderRequest(
     line_items: [{
       type: 'product',
       product: {
-        // INTTEGRO:DECISION [catalog-snapshot] Look up the configured Inttegro
-        // Product and Price, then snapshot those verified catalogue fields into
-        // the Order. This portable shape works across maintained SDK versions.
-        // INTTEGRO:ALTERNATIVE [catalog-snapshot] Where the SDK exposes the
-        // catalogue union, use product_id + price_id + quantity instead, without
-        // mixing in any inline product fields.
-        ...product,
+        // Preserve catalog identity so product analytics, order filters, and
+        // refund attribution can join this order line back to its source.
+        product_id: product.productId,
+        price_id: product.priceId,
         quantity: 1,
       },
     }],
@@ -165,7 +168,10 @@ export async function createHostedCheckout(input: CheckoutInput, requestOrigin: 
     // price changes are observed. High-volume services can add a short cache
     // with an explicit invalidation policy. https://studio.inttegro.com/products
     const product = selectCatalogProduct(await client.products.lookup({ product_id: productId }), priceId);
-    const order = await client.orders.create(buildOrderRequest(input, publicOrigin(requestOrigin), product));
+    const request = buildOrderRequest(input, publicOrigin(requestOrigin), product);
+    // SDK 7 predates the catalog-reference request union already accepted by
+    // the API. Remove this compatibility cast after upgrading the demo SDK.
+    const order = await client.orders.create(request as unknown as CreateOrderRequest);
     // INTTEGRO:DECISION [returned-checkout-url] Use the server response rather
     // than constructing a URL from order.id and undocumented routing details.
     const checkoutUrl = order.invoice?.format?.web?.url;

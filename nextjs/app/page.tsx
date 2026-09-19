@@ -69,7 +69,7 @@ export default async function Home({ searchParams }: HomeProps) {
               <span className="setup-kicker">Setup required</span>
               <h3>Connect this copy to Inttegro</h3>
               <p>Add <code>INTTEGRO_API_KEY</code> as a server-side secret, set the active Product and Price IDs plus this deployment’s public URL, then redeploy. The key must never use a <code>NEXT_PUBLIC_</code> prefix.</p>
-              <div className="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/zebodotdev/inttegro-demos/blob/nextjs-v1.8.3/nextjs/README.md#deploy-your-own">Deployment guide</a></div>
+              <div className="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/inttegro/inttegro-demos/blob/nextjs-v1.8.3/nextjs/README.md#deploy-your-own">Deployment guide</a></div>
             </section>
           ) : error.code ? <p className="inline-error" role="alert"><strong>{error.code.replaceAll('_', ' ')}:</strong> {error.message || 'Checkout could not be started.'}</p> : null}
           <div className="cart-line kora-cart-line"><img src="/kora-dawn-brew.jpg" alt="" /><div><div className="row"><h3>Dawn Brew Set</h3><strong>GHS 50</strong></div><p className="microcopy"><span data-finish-label>Sunrise clay</span> · Quantity 1</p></div></div>

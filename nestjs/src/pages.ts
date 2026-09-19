@@ -21,7 +21,7 @@ const document = (body: string, title = 'Openfield — Riverbend Learning Garden
 
 function setupMessage(error?: { code: string; message: string }) {
   if (error?.code === 'configuration_error') {
-    return `<section class="setup-card" role="status"><span>Setup required</span><strong>Connect this copy to Inttegro</strong><p>Add the API key, campaign Product and Price IDs, and public URL as server-side environment variables. No secret belongs in this page.</p><div><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/zebodotdev/inttegro-demos/tree/main/nestjs">Read the guide</a></div></section>`;
+    return `<section class="setup-card" role="status"><span>Setup required</span><strong>Connect this copy to Inttegro</strong><p>Add the API key, campaign Product and Price IDs, and public URL as server-side environment variables. No secret belongs in this page.</p><div><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/inttegro/inttegro-demos/tree/main/nestjs">Read the guide</a></div></section>`;
   }
   return error
     ? `<p class="inline-error" role="alert"><strong>${escapeHtml(error.code.replaceAll('_', ' '))}:</strong> ${escapeHtml(error.message)}</p>`

@@ -10,7 +10,7 @@ function Mark() {
 function SetupMessage({ error }: { error?: HomeProps['error'] }) {
   if (!error) return null;
   if (error.code === 'configuration_error') {
-    return <section className="setup-card" role="status"><span>Setup required</span><strong>Connect this copy to Inttegro</strong><p>Add the API key, campaign Product and Price IDs, and public URL as Worker secrets. No credential belongs in this component.</p><div><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/zebodotdev/inttegro-demos/tree/main/redwoodsdk">Read the guide</a></div></section>;
+    return <section className="setup-card" role="status"><span>Setup required</span><strong>Connect this copy to Inttegro</strong><p>Add the API key, campaign Product and Price IDs, and public URL as Worker secrets. No credential belongs in this component.</p><div><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/inttegro/inttegro-demos/tree/main/redwoodsdk">Read the guide</a></div></section>;
   }
   return <p className="inline-error" role="alert"><strong>{error.code.replaceAll('_', ' ')}:</strong> {error.message}</p>;
 }

@@ -34,10 +34,10 @@ HTTPS origin before exposing the container publicly.
 
 ## Deploy your own
 
-[![Deploy to Cloud Run](../assets/providers/cloud-run-button.svg)](https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos.git&revision=deploy-go-v1.8.3)
+[![Deploy to Cloud Run](../assets/providers/cloud-run-button.svg)](https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos.git&revision=deploy-go-v1.8.3)
 [![Run with Docker](../assets/providers/docker-button.svg)](#run-with-docker)
 [![Deploy on Railway](../assets/providers/railway-button.svg)](https://railway.com/new/template/ABT6ae?utm_medium=integration&utm_source=inttegro-demos&utm_campaign=go)
-[![Deploy to Render](../assets/providers/render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos%2Ftree%2Fdeploy-go-v1.8.3)
+[![Deploy to Render](../assets/providers/render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos%2Ftree%2Fdeploy-go-v1.8.3)
 
 Cloud Run, Railway, and Render build a small distroless image from the released
 multi-stage Dockerfile. The deployment links target immutable release refs. See

@@ -38,11 +38,11 @@ HTTPS origin before exposing the container publicly.
 
 ## Deploy your own
 
-[![Deploy to Cloud Run](../assets/providers/cloud-run-button.svg)](https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos.git&revision=deploy-django-v1.8.3)
-[![Deploy to Cloudflare](../assets/providers/cloudflare-button.svg)](https://deploy.workers.cloudflare.com/?url=https://github.com/zebodotdev/inttegro-demos/tree/deploy-django-v1.8.3)
+[![Deploy to Cloud Run](../assets/providers/cloud-run-button.svg)](https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos.git&revision=deploy-django-v1.8.3)
+[![Deploy to Cloudflare](../assets/providers/cloudflare-button.svg)](https://deploy.workers.cloudflare.com/?url=https://github.com/inttegro/inttegro-demos/tree/deploy-django-v1.8.3)
 [![Run with Docker](../assets/providers/docker-button.svg)](#run-with-docker)
 [![Deploy on Railway](../assets/providers/railway-button.svg)](https://railway.com/new/template/0h-Ilj?utm_medium=integration&utm_source=inttegro-demos&utm_campaign=django)
-[![Deploy to Render](../assets/providers/render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos%2Ftree%2Fdeploy-django-v1.8.3)
+[![Deploy to Render](../assets/providers/render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos%2Ftree%2Fdeploy-django-v1.8.3)
 
 Cloud Run, Railway, and Render build the release-pinned Dockerfile. Railway generates the Django signing
 secret, and configures its public and health-check hostnames. On Render, set

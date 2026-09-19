@@ -8,7 +8,7 @@ const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, (character) => (
 
 export function homePage(attemptId: string, error?: { code: string; message: string }) {
   const alert = error?.code === 'configuration_error'
-    ? `<section class="setup-card has-config-error" role="status"><span class="setup-kicker">Setup required</span><h3>Connect this copy to Inttegro</h3><p>Add <code>INTTEGRO_API_KEY</code> as a server-side secret, set the active Product and Price IDs plus this deployment’s public URL, then redeploy. The key never belongs in browser JavaScript.</p><div class="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/zebodotdev/inttegro-demos/blob/express-v1.8.3/express/README.md#deploy-your-own">Deployment guide</a></div></section>`
+    ? `<section class="setup-card has-config-error" role="status"><span class="setup-kicker">Setup required</span><h3>Connect this copy to Inttegro</h3><p>Add <code>INTTEGRO_API_KEY</code> as a server-side secret, set the active Product and Price IDs plus this deployment’s public URL, then redeploy. The key never belongs in browser JavaScript.</p><div class="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/inttegro/inttegro-demos/blob/express-v1.8.3/express/README.md#deploy-your-own">Deployment guide</a></div></section>`
     : error
       ? `<p class="inline-error" role="alert"><strong>${escapeHtml(error.code.replaceAll('_', ' '))}:</strong> ${escapeHtml(error.message)}</p>`
       : '';

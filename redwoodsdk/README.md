@@ -65,7 +65,7 @@ contract, and create a production Worker build.
 
 ## Deploy your own
 
-[![Deploy to Cloudflare](../assets/providers/cloudflare-button.svg)](https://deploy.workers.cloudflare.com/?url=https://github.com/zebodotdev/inttegro-demos/tree/deploy-redwoodsdk-v1.8.3)
+[![Deploy to Cloudflare](../assets/providers/cloudflare-button.svg)](https://deploy.workers.cloudflare.com/?url=https://github.com/inttegro/inttegro-demos/tree/deploy-redwoodsdk-v1.8.3)
 
 RedwoodSDK is Cloudflare-native. The button starts from the immutable 1.8.3
 deployment branch. Cloudflare asks the reader for the required bindings without

@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "version": "1.8.0",
   "suiteTag": "v1.8.0",
-  "repository": "https://github.com/zebodotdev/inttegro-demos",
-  "permalinkTemplate": "https://github.com/zebodotdev/inttegro-demos/blob/{tag}/{file}#L{start}-L{end}",
-  "rawTemplate": "https://raw.githubusercontent.com/zebodotdev/inttegro-demos/{tag}/{file}",
+  "repository": "https://github.com/inttegro/inttegro-demos",
+  "permalinkTemplate": "https://github.com/inttegro/inttegro-demos/blob/{tag}/{file}#L{start}-L{end}",
+  "rawTemplate": "https://raw.githubusercontent.com/inttegro/inttegro-demos/{tag}/{file}",
   "releaseNotes": "releases/v1.8.0.md",
   "deploymentManifest": "deployments.json",
   "demos": [

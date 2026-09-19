@@ -56,7 +56,7 @@ Studio must link to a tag, never to `main`. Construct a link with the release
 manifest's `permalinkTemplate`:
 
 ```text
-https://github.com/zebodotdev/inttegro-demos/blob/{tag}/{file}#L{start}-L{end}
+https://github.com/inttegro/inttegro-demos/blob/{tag}/{file}#L{start}-L{end}
 ```
 
 For example, a Laravel page for version 1.0.0 can link to a section of

@@ -34,7 +34,7 @@ useSeoMeta({ title: 'Kora Market — Inttegro + Nuxt', description: 'A productio
         <section v-if="needsConfiguration" class="setup-card has-config-error" role="status">
           <span class="setup-kicker">Setup required</span><h3>Connect this copy to Inttegro</h3>
           <p>Add <code>NUXT_INTTEGRO_API_KEY</code> as a private secret, set the active Product and Price IDs plus this deployment’s public URL, then redeploy. Never place the key in <code>runtimeConfig.public</code>.</p>
-          <div class="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/zebodotdev/inttegro-demos/blob/nuxt-v1.8.3/nuxt/README.md#deploy-your-own">Deployment guide</a></div>
+          <div class="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a><a href="https://github.com/inttegro/inttegro-demos/blob/nuxt-v1.8.3/nuxt/README.md#deploy-your-own">Deployment guide</a></div>
         </section>
         <p v-else-if="errorCode" class="inline-error" role="alert"><strong>{{ errorCode.replaceAll('_', ' ') }}:</strong> {{ errorMessage || 'Checkout could not be started.' }}</p>
         <div class="cart-line kora-cart-line"><img src="/kora-dawn-brew.jpg" alt=""><div><div class="row"><h3>Dawn Brew Set</h3><strong>GHS 50</strong></div><p class="microcopy"><span data-finish-label>Sunrise clay</span> · Quantity 1</p></div></div><div class="cart-total kora-cart-total"><span>Total</span><strong>GHS 50.00</strong></div>

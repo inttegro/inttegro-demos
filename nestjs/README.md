@@ -87,9 +87,9 @@ The container exposes `GET /health`. Use `docker compose down` when finished.
 
 ## Deploy your own
 
-[![Deploy to Cloud Run](../assets/providers/cloud-run-button.svg)](https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos.git&revision=deploy-nestjs-v1.8.3)
+[![Deploy to Cloud Run](../assets/providers/cloud-run-button.svg)](https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos.git&revision=deploy-nestjs-v1.8.3)
 [![Run with Docker](../assets/providers/docker-button.svg)](#run-with-docker)
-[![Deploy to Render](../assets/providers/render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos%2Ftree%2Fdeploy-nestjs-v1.8.3)
+[![Deploy to Render](../assets/providers/render-button.svg)](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos%2Ftree%2Fdeploy-nestjs-v1.8.3)
 
 Cloud Run and Render start from the immutable 1.8.3 deployment branch. Railway
 configuration is also checked in, but its button remains unavailable until a

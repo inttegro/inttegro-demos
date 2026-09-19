@@ -43,7 +43,7 @@ assert.equal(manifest.currentRelease.suiteTag, release.suiteTag, 'current suite 
 assert.equal(release.suiteTag, `v${release.version}`, 'suite tag must match the release version');
 assert.equal(
   release.repository,
-  'https://github.com/zebodotdev/inttegro-demos',
+  'https://github.com/inttegro/inttegro-demos',
   'release repository must remain canonical',
 );
 assert.equal(
@@ -53,7 +53,7 @@ assert.equal(
 );
 assert.equal(
   release.rawTemplate,
-  'https://raw.githubusercontent.com/zebodotdev/inttegro-demos/{tag}/{file}',
+  'https://raw.githubusercontent.com/inttegro/inttegro-demos/{tag}/{file}',
   'raw source template must use an immutable tag',
 );
 assert(existsSync(join(demosRoot, release.releaseNotes)), 'release notes referenced by the manifest must exist');
@@ -531,7 +531,7 @@ for (const id of ['express', 'django', 'fastapi', 'go', 'rails', 'laravel']) {
   const readme = readFileSync(join(demosRoot, id, 'README.md'), 'utf8');
   assert(
     readme.includes(
-      `https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Fzebodotdev%2Finttegro-demos.git&revision=deploy-${id}-v${release.version}`,
+      `https://deploy.cloud.run/?git_repo=https%3A%2F%2Fgithub.com%2Finttegro%2Finttegro-demos.git&revision=deploy-${id}-v${release.version}`,
     ),
     `${id} README must launch Cloud Run from its immutable deployment ref`,
   );

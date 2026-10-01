@@ -17,7 +17,7 @@ evidence of payment.
 - a framework-native `POST /checkout` server endpoint
 - Astro's same-origin form protection and a bounded request-body limit
 - server-side Product and Price lookup with `@inttegro/inttegro-sdk`
-- a bounded tier translated to a trusted amount under a saved Price policy
+- suggested tiers plus a supporter-entered amount validated against a saved Price policy
 - a retry-stable idempotency key and readable merchant Order number
 - a no-store minimal Order reference for embedded or modal Checkout
 - a resilient `303` hosted-page fallback that still works without JavaScript
@@ -29,7 +29,8 @@ boundary, safe errors, cookie correlation, and response negotiation.
 
 ## Try the Checkout presentations
 
-Choose a contribution tier, then choose **Embedded**, **Modal**, or **Hosted page**.
+Choose a suggested contribution or enter another amount, then choose
+**Embedded**, **Modal**, or **Hosted page**.
 Embedded is the default. Embedded and modal receive only a no-store finalized
 Order ID; hosted and no-JavaScript submissions receive a `303` to the URL
 returned by Inttegro. All three create the same server-authoritative Order.
@@ -40,9 +41,10 @@ Create and publish a `cause` Product named `Riverbend Learning Garden
 contribution` with an active `customer_selected_amount` Price in GHS. Set its
 minimum no higher than **GHS 50**, its maximum no lower than **GHS 250**, and
 include **GHS 50**, **GHS 100**, and **GHS 250** as suggested amounts. The
-server maps each visible tier to one of those suggestions and couples that
-amount to the configured Product and Price IDs. A public request cannot choose
-an arbitrary amount, Product, Price, or currency.
+server couples both suggestions and supporter-entered amounts to the configured
+Product and Price IDs, then enforces the saved minimum and maximum. Suggested
+amounts are not an allow-list. A public request cannot choose a different
+Product, Price, currency, or an amount outside the Price policy.
 
 Copy `.env.example` to `.env` and set:
 
@@ -68,7 +70,7 @@ Open <http://localhost:3014>. Run `npm run check` for Astro diagnostics, the
 checkout contract tests, and a production server build.
 
 After configuring an internal or private-beta app, `npm run smoke:cause`
-creates a real GHS 100 Order from the saved customer-selected Price and marks it
+creates a real GHS 75 Order from the saved customer-selected Price and marks it
 paid out of band before completing it. `npm run provision:cause` creates or
 reuses the fictional campaign catalog records and prints their non-secret IDs.
 

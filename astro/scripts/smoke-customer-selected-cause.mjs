@@ -91,7 +91,9 @@ async function smoke() {
         productId,
         customerSelectedPrice: {
           priceId,
-          selectedAmount: { currency: 'ghs', value: 10_000 },
+          // Intentionally not one of the suggestions: suggestions guide the
+          // UI but do not restrict a customer-selected Price.
+          selectedAmount: { currency: 'ghs', value: 7_500 },
         },
         quantity: 1,
       },

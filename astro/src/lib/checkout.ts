@@ -32,12 +32,14 @@ const contributionTiers = {
 } as const;
 
 type ContributionTier = keyof typeof contributionTiers;
+type ContributionChoice = ContributionTier | 'custom';
 
 export type CheckoutInput = {
   name: string;
   email: string;
   phone: string;
-  tier: ContributionTier;
+  tier: ContributionChoice;
+  selectedAmount: number;
   attemptId: string;
 };
 
@@ -45,6 +47,8 @@ type CatalogSelection = {
   productId: string;
   priceId: string;
   currency: Currency;
+  minimum: number;
+  maximum?: number;
 };
 
 export class DemoError extends Error {
@@ -60,35 +64,60 @@ function valueFrom(values: FormData | Record<string, unknown>, key: string): str
   return String(values instanceof FormData ? values.get(key) ?? '' : values[key] ?? '').trim();
 }
 
+function selectedAmountFor(tier: string, customAmount: string): number | undefined {
+  if (tier in contributionTiers) {
+    return contributionTiers[tier as ContributionTier].selectedAmount;
+  }
+  if (tier !== 'custom') return undefined;
+
+  // Parse decimal Ghana cedis without floating-point rounding. The API receives
+  // minor units, so `75.50` becomes 7,550 pesewas.
+  const match = /^(\d{1,9})(?:\.(\d{1,2}))?$/.exec(customAmount);
+  if (!match) return undefined;
+  const selectedAmount = Number(match[1]) * 100 + Number((match[2] ?? '').padEnd(2, '0'));
+  return Number.isSafeInteger(selectedAmount) && selectedAmount > 0
+    ? selectedAmount
+    : undefined;
+}
+
 export function parseCheckoutInput(values: FormData | Record<string, unknown>): CheckoutInput {
   const input = {
     name: valueFrom(values, 'name'),
     email: valueFrom(values, 'email'),
     phone: valueFrom(values, 'phone'),
     tier: valueFrom(values, 'tier'),
+    customAmount: valueFrom(values, 'custom_amount'),
     attemptId: valueFrom(values, 'attempt_id'),
   };
+  const selectedAmount = selectedAmountFor(input.tier, input.customAmount);
 
   if (
     input.name.length < 2
     || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)
     || !/^\+[1-9][0-9]{7,14}$/.test(input.phone)
-    || !(input.tier in contributionTiers)
+    || selectedAmount === undefined
     || !/^[A-Za-z0-9_-]{8,100}$/.test(input.attemptId)
   ) {
     throw new DemoError(
       'validation_error',
-      'Choose a contribution and enter a valid name, email, and international phone number.',
+      'Choose or enter a valid contribution and provide a valid name, email, and international phone number.',
     );
   }
 
-  return { ...input, tier: input.tier as ContributionTier };
+  return {
+    name: input.name,
+    email: input.email,
+    phone: input.phone,
+    tier: input.tier as ContributionChoice,
+    selectedAmount,
+    attemptId: input.attemptId,
+  };
 }
 
 export function selectCatalogProduct(product: Product, priceId: string): CatalogSelection {
-  // INTTEGRO:SECURITY [catalog-authority] Public input names only one bounded
-  // tier. Product identity, price policy, currency, and selectable amounts come
-  // from trusted configuration and the Product returned by Inttegro.
+  // INTTEGRO:SECURITY [catalog-authority] Public input may choose a suggestion
+  // or enter an amount. Product identity, Price policy, currency, and the
+  // enforceable minimum/maximum come from trusted configuration and Inttegro.
   if (!product.active || product.type !== 'cause') {
     throw new DemoError(
       'configuration_error',
@@ -121,6 +150,10 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
     productId: product.id,
     priceId: price.id,
     currency: price.customerSelectedAmount.currency,
+    minimum: price.customerSelectedAmount.minimum,
+    ...(price.customerSelectedAmount.maximum === undefined
+      ? {}
+      : { maximum: price.customerSelectedAmount.maximum }),
   };
 }
 
@@ -129,6 +162,16 @@ export function buildOrderRequest(
   publicOrigin: string,
   product: CatalogSelection,
 ): CreateOrderRequest {
+  if (
+    input.selectedAmount < product.minimum
+    || (product.maximum !== undefined && input.selectedAmount > product.maximum)
+  ) {
+    throw new DemoError(
+      'validation_error',
+      'Enter a contribution within the minimum and maximum configured for this campaign.',
+    );
+  }
+
   return {
     // INTTEGRO:DECISION [stable-idempotency-key] One rendered attempt ID
     // represents one logical contribution and remains stable across retries.
@@ -151,14 +194,15 @@ export function buildOrderRequest(
     lineItems: [{
       type: 'product',
       product: {
-        // INTTEGRO:DECISION [catalog-snapshot] Keep the configured Product and
-        // Price policy coupled to the server-owned amount chosen by this tier.
+        // INTTEGRO:DECISION [catalog-snapshot] The configured Product and Price
+        // policy stay server-owned while the supporter selects any amount
+        // allowed by the trusted minimum and maximum.
         productId: product.productId,
         customerSelectedPrice: {
           priceId: product.priceId,
           selectedAmount: {
             currency: product.currency,
-            value: contributionTiers[input.tier].selectedAmount,
+            value: input.selectedAmount,
           },
         },
         quantity: 1,

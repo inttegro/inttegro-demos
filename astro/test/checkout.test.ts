@@ -48,8 +48,23 @@ test('validates and normalizes a public contribution', () => {
     email: 'akua@example.com',
     phone: '+233544998605',
     tier: 'grower',
+    selectedAmount: 10_000,
     attemptId: 'attempt_1234',
   });
+});
+
+test('accepts a supporter-entered amount in Ghana cedis', () => {
+  const input = parseCheckoutInput({
+    name: 'Akua Mensah',
+    email: 'akua@example.com',
+    phone: '+233544998605',
+    tier: 'custom',
+    custom_amount: '75.50',
+    attempt_id: 'attempt_1234',
+  });
+
+  assert.equal(input.tier, 'custom');
+  assert.equal(input.selectedAmount, 7_550);
 });
 
 test('rejects an unrecognized contribution tier before calling Inttegro', () => {
@@ -58,7 +73,21 @@ test('rejects an unrecognized contribution tier before calling Inttegro', () => 
       name: 'Akua Mensah',
       email: 'akua@example.com',
       phone: '+233544998605',
+      tier: 'unrecognized',
+      attempt_id: 'attempt_1234',
+    }),
+    (error: unknown) => error instanceof DemoError && error.code === 'validation_error',
+  );
+});
+
+test('rejects a custom contribution with more than two decimal places', () => {
+  assert.throws(
+    () => parseCheckoutInput({
+      name: 'Akua Mensah',
+      email: 'akua@example.com',
+      phone: '+233544998605',
       tier: 'custom',
+      custom_amount: '75.005',
       attempt_id: 'attempt_1234',
     }),
     (error: unknown) => error instanceof DemoError && error.code === 'validation_error',
@@ -89,6 +118,43 @@ test('builds a server-owned contribution order for the selected tier', () => {
     priceId: 'pr_openfield',
     selectedAmount: { currency: 'ghs', value: 25_000 },
   });
+});
+
+test('builds an order with a valid supporter-entered amount', () => {
+  const input = parseCheckoutInput({
+    name: 'Akua Mensah',
+    email: 'akua@example.com',
+    phone: '+233544998605',
+    tier: 'custom',
+    custom_amount: '75',
+    attempt_id: 'attempt_1234',
+  });
+  const selection = selectCatalogProduct(product, 'pr_openfield');
+  const request = buildOrderRequest(input, 'https://astro-demo.inttegro.dev', selection);
+  const lineItem = request.lineItems[0];
+  assert.equal(lineItem?.type, 'product');
+  if (lineItem?.type !== 'product') assert.fail('expected a product line item');
+  assert.deepEqual(lineItem.product.customerSelectedPrice, {
+    priceId: 'pr_openfield',
+    selectedAmount: { currency: 'ghs', value: 7_500 },
+  });
+  assert.equal(request.customData?.contributionTier, 'custom');
+});
+
+test('enforces the trusted customer-selected price range', () => {
+  const selection = selectCatalogProduct(product, 'pr_openfield');
+  const input = parseCheckoutInput({
+    name: 'Akua Mensah',
+    email: 'akua@example.com',
+    phone: '+233544998605',
+    tier: 'custom',
+    custom_amount: '25',
+    attempt_id: 'attempt_1234',
+  });
+  assert.throws(
+    () => buildOrderRequest(input, 'https://astro-demo.inttegro.dev', selection),
+    (error: unknown) => error instanceof DemoError && error.code === 'validation_error',
+  );
 });
 
 test('requires a cause with a matching customer-selected price policy', () => {

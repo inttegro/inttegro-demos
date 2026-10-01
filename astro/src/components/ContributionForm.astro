@@ -19,23 +19,42 @@ const { attemptId, error } = Astro.props;
   </div>
   <div class="support-impact-promise"><span class="support-impact-mark" aria-hidden="true">✦</span><p><strong>GHS 50 helps stock a growing bed.</strong><span>Seed packs, child-sized tools, and the first planting workshop.</span></p></div>
   <div class="support-form">
-    <p class="chapter-number">Make a contribution</p>
-    <h2 id="support-title">Choose how you’ll help it grow.</h2>
+    <p class="chapter-number">Support this project</p>
+    <h2 id="support-title">Choose your amount.</h2>
+    <p class="support-invitation">Give what feels right. Every contribution moves the garden closer to opening day.</p>
     <SetupMessage error={error} />
     <form action="/checkout" method="post" data-contribution-form data-checkout-show-line-items="false">
       <input type="hidden" name="attempt_id" value={attemptId} />
-      <fieldset>
-        <legend class="sr-only">Contribution amount</legend>
-        <label class="tier"><input type="radio" name="tier" value="seed" checked /><span><strong>GHS 50</strong><small>Seed the garden</small></span><i>Suggested contribution</i></label>
-        <label class="tier"><input type="radio" name="tier" value="grower" /><span><strong>GHS 100</strong><small>Help it grow</small></span><i>Recommended contribution</i></label>
-        <label class="tier"><input type="radio" name="tier" value="steward" /><span><strong>GHS 250</strong><small>Become a steward</small></span><i>Suggested contribution</i></label>
+      <fieldset class="amount-picker">
+        <legend class="sr-only">Choose your contribution amount</legend>
+        <div class="amount-entry" data-custom-amount-control>
+          <div class="amount-entry-heading">
+            <input class="sr-only" id="tier-custom" type="radio" name="tier" value="custom" checked />
+            <label for="tier-custom">Enter your amount</label>
+            <span>One-time contribution</span>
+          </div>
+          <label class="amount-input" for="custom-amount">
+            <span aria-hidden="true">GHS</span>
+            <input id="custom-amount" name="custom_amount" type="text" inputmode="decimal" pattern="[0-9]+([.][0-9]{1,2})?" placeholder="0.00" aria-label="Contribution amount in Ghana cedis" aria-describedby="amount-help" autocomplete="off" />
+          </label>
+          <small id="amount-help">Choose what feels right for you.</small>
+        </div>
+        <div class="suggested-amounts">
+          <span>Or choose a quick amount</span>
+          <div>
+            <label class="amount-chip"><input type="radio" name="tier" value="seed" /><span>GHS 50</span></label>
+            <label class="amount-chip"><input type="radio" name="tier" value="grower" /><span>GHS 100</span><small>Popular</small></label>
+            <label class="amount-chip"><input type="radio" name="tier" value="steward" /><span>GHS 250</span></label>
+          </div>
+        </div>
       </fieldset>
       <div class="fields">
+        <p>Your details</p>
         <label>Full name<input name="name" value="Akua Mensah" autocomplete="name" required /></label>
         <label>Email address<input type="email" name="email" value="akua@example.com" autocomplete="email" required /></label>
         <label>Phone number<input type="tel" name="phone" value="+233544998605" autocomplete="tel" inputmode="tel" required /></label>
       </div>
-      <button type="submit"><span>Contribute GHS 50</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"></path></svg></button>
+      <button type="submit"><span>Enter an amount to continue</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"></path></svg></button>
       <p class="secure-note"><span aria-hidden="true">◇</span> Secure checkout powered by Inttegro</p>
     </form>
   </div>

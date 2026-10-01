@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
-  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -325,7 +324,7 @@ const styles = StyleSheet.create({
   editorialIntro: { paddingHorizontal: 20, paddingBottom: 34, paddingTop: 36 },
   overline: { borderTopColor: "rgba(27,32,28,.18)", borderTopWidth: 1, flexDirection: "row", justifyContent: "space-between", paddingTop: 10 },
   overlineText: { color: "#686a63", fontSize: 9, fontWeight: "700", letterSpacing: 1.4 },
-  editorialTitle: { color: "#1b201c", fontFamily: Platform.select({ ios: "Georgia", android: "serif" }), fontSize: 54, letterSpacing: -2.8, lineHeight: 50, marginTop: 54 },
+  editorialTitle: { color: "#1b201c", fontSize: 54, fontWeight: "500", letterSpacing: -2.8, lineHeight: 50, marginTop: 54 },
   editorialTitleAccent: { color: "#a84d32", fontStyle: "italic" },
   hero: {
     aspectRatio: 0.82,
@@ -364,7 +363,6 @@ const styles = StyleSheet.create({
   title: {
     color: "#183c32",
     flex: 1,
-    fontFamily: Platform.select({ ios: "Georgia", android: "serif" }),
     fontSize: 34,
     fontWeight: "500",
     letterSpacing: -1.4,
@@ -372,7 +370,6 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: "#183c32",
-    fontFamily: Platform.select({ ios: "Georgia", android: "serif" }),
     fontSize: 22,
     fontWeight: "500",
     letterSpacing: -0.7,
@@ -423,7 +420,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     padding: 20,
   },
-  makerTitle: { color: "#fffaf1", fontFamily: Platform.select({ ios: "Georgia", android: "serif" }), fontSize: 22, fontWeight: "500" },
+  makerTitle: { color: "#fffaf1", fontSize: 22, fontWeight: "500" },
   makerCopy: { color: "#d5d8d2", fontSize: 15, lineHeight: 23, marginTop: 10 },
   divider: {
     backgroundColor: "rgba(255,255,255,.15)",

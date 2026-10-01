@@ -1,6 +1,7 @@
 :root {
   color-scheme: light;
-  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-synthesis: none;
   --paper: #f4f1e9;
   --surface: #fbfaf6;
@@ -41,7 +42,7 @@ img { display: block; width: 100%; }
 .hero-copy { position: relative; z-index: 1; }
 .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--orange); font-size: 11px; font-weight: 820; letter-spacing: .14em; text-transform: uppercase; }
 .eyebrow > span { width: 22px; height: 1px; background: currentColor; }
-.hero h1 { margin: 0; font: 560 clamp(58px, 8.8vw, 132px)/.86 Georgia, serif; letter-spacing: -.068em; }
+.hero h1 { margin: 0; font: 500 clamp(58px, 8.8vw, 132px)/.86 var(--font-sans); letter-spacing: -.068em; }
 .hero h1 i { color: var(--green); font-weight: inherit; }
 .hero-lede { max-width: 59ch; margin: 30px 0; color: var(--muted); font-size: clamp(16px, 1.5vw, 20px); line-height: 1.65; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
@@ -68,7 +69,7 @@ img { display: block; width: 100%; }
 
 .catalogue { padding: clamp(74px, 10vw, 140px) clamp(20px, 6vw, 96px); }
 .section-head { display: flex; max-width: 1320px; margin: auto; align-items: end; justify-content: space-between; gap: 40px; }
-.section-head h2 { margin: 0; font: 560 clamp(44px, 6vw, 82px)/.95 Georgia, serif; letter-spacing: -.055em; }
+.section-head h2 { margin: 0; font: 500 clamp(44px, 6vw, 82px)/.95 var(--font-sans); letter-spacing: -.055em; }
 .section-head > p { max-width: 49ch; margin: 0 0 5px; color: var(--muted); line-height: 1.65; }
 .filter-bar { display: flex; max-width: 1320px; margin: 44px auto 24px; align-items: center; justify-content: space-between; gap: 18px; }
 .segmented { display: inline-flex; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: rgb(255 255 255 / .35); }

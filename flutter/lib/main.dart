@@ -245,12 +245,12 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
             sliver: SliverList.list(children: [
               const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('VOLTA STUDIO', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 1.4, color: Color(0xff686a63))), Text('OBJECT 01—03', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 1.4, color: Color(0xff686a63)))]),
               const SizedBox(height: 42),
-              const Text('A slower,\nwarmer morning.', style: TextStyle(fontFamily: 'serif', fontSize: 54, height: .92, fontWeight: FontWeight.w400, letterSpacing: -2.6, color: Color(0xff1b201c))),
+              const Text('A slower,\nwarmer morning.', style: TextStyle(fontSize: 54, height: .92, fontWeight: FontWeight.w500, letterSpacing: -2.6, color: Color(0xff1b201c))),
               const SizedBox(height: 48),
               const Text('HAND-THROWN STONEWARE · HO, GHANA', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w800, letterSpacing: 1.2, color: Color(0xffa84d32))),
               const SizedBox(height: 14),
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const Expanded(child: Text('Dawn Brew Set', style: TextStyle(fontFamily: 'serif', fontSize: 34, height: 1, fontWeight: FontWeight.w500, letterSpacing: -1.2))),
+                const Expanded(child: Text('Dawn Brew Set', style: TextStyle(fontSize: 34, height: 1, fontWeight: FontWeight.w500, letterSpacing: -1.2))),
                 const SizedBox(width: 16),
                 Text('GHS 50', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
               ]),
@@ -285,7 +285,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    const Text('Made by Ama Ofori', style: TextStyle(fontFamily: 'serif', color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500)),
+                    const Text('Made by Ama Ofori', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 10),
                     const Text('Every piece keeps the subtle marks of its making. Local clay is fired to a food-safe finish and packed without plastic.', style: TextStyle(height: 1.45, color: Color(0xffd5d8d2))),
                     const Divider(height: 30, color: Color(0x33ffffff)),

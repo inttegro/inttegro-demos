@@ -488,7 +488,14 @@ const astroCloudRun = JSON.parse(readFileSync(join(demosRoot, 'astro/app.json'),
 assert(deployments.demos.some((demo) => demo.id === 'astro'), 'Astro deployment metadata must be published');
 assert.equal(astroPackage.dependencies.astro, '7.3.2', 'Astro must pin the verified framework release');
 assert.equal(astroPackage.dependencies['@astrojs/node'], '11.1.5', 'Astro must use the compatible official Node adapter');
-assert.equal(astroPackage.dependencies['@inttegro/inttegro-sdk'], '8.2.0', 'Astro must pin the verified Inttegro TypeScript SDK');
+for (const id of ['astro', 'nestjs', 'redwoodsdk']) {
+  const appPackage = JSON.parse(readFileSync(join(demosRoot, id, 'package.json'), 'utf8'));
+  assert.equal(
+    appPackage.dependencies['@inttegro/inttegro-sdk'],
+    '11.2.0',
+    `${id} must pin the customer-selected Price SDK release`,
+  );
+}
 assert(astroConfig.includes('checkOrigin: true'), 'Astro must keep same-origin form protection enabled');
 assert(astroConfig.includes('bodySizeLimit: 64 * 1024'), 'Astro must bound checkout request bodies');
 assert(astroCompose.includes('path: .env'), 'Astro Compose must load its documented environment file');

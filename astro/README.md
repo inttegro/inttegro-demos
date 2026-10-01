@@ -17,7 +17,7 @@ evidence of payment.
 - a framework-native `POST /checkout` server endpoint
 - Astro's same-origin form protection and a bounded request-body limit
 - server-side Product and Price lookup with `@inttegro/inttegro-sdk`
-- a bounded tier translated to a trusted quantity rather than a public amount
+- a bounded tier translated to a trusted amount under a saved Price policy
 - a retry-stable idempotency key and readable merchant Order number
 - a no-store minimal Order reference for embedded or modal Checkout
 - a resilient `303` hosted-page fallback that still works without JavaScript
@@ -36,10 +36,13 @@ returned by Inttegro. All three create the same server-authoritative Order.
 
 ## Configure the campaign Product
 
-Create and publish a Product named `Riverbend Learning Garden contribution`
-with an active Price of exactly **GHS 50**. The three visible tiers multiply
-that trusted unit price by 1, 2, or 5 on the server. A public request cannot
-choose an arbitrary amount, Product, Price, or currency.
+Create and publish a `cause` Product named `Riverbend Learning Garden
+contribution` with an active `customer_selected_amount` Price in GHS. Set its
+minimum no higher than **GHS 50**, its maximum no lower than **GHS 250**, and
+include **GHS 50**, **GHS 100**, and **GHS 250** as suggested amounts. The
+server maps each visible tier to one of those suggestions and couples that
+amount to the configured Product and Price IDs. A public request cannot choose
+an arbitrary amount, Product, Price, or currency.
 
 Copy `.env.example` to `.env` and set:
 
@@ -63,6 +66,11 @@ npm run dev
 
 Open <http://localhost:3014>. Run `npm run check` for Astro diagnostics, the
 checkout contract tests, and a production server build.
+
+After configuring an internal or private-beta app, `npm run smoke:cause`
+creates a real GHS 100 Order from the saved customer-selected Price and marks it
+paid out of band before completing it. `npm run provision:cause` creates or
+reuses the fictional campaign catalog records and prints their non-secret IDs.
 
 ## Deploy your own
 

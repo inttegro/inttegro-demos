@@ -2,6 +2,7 @@ import {
   InttegroAPIError,
   InttegroClient,
   type CreateOrderRequest,
+  type Currency,
   type Product,
 } from '@inttegro/inttegro-sdk';
 
@@ -25,9 +26,9 @@ import {
  */
 
 const contributionTiers = {
-  seed: { quantity: 1 },
-  grower: { quantity: 2 },
-  steward: { quantity: 5 },
+  seed: { selectedAmount: 5_000 },
+  grower: { selectedAmount: 10_000 },
+  steward: { selectedAmount: 25_000 },
 } as const;
 
 type ContributionTier = keyof typeof contributionTiers;
@@ -41,11 +42,9 @@ export type CheckoutInput = {
 };
 
 type CatalogSelection = {
-  type: Product['type'];
-  name: string;
-  about?: string;
-  reference?: string;
-  price: NonNullable<Product['prices']>[number]['nominal'];
+  productId: string;
+  priceId: string;
+  currency: Currency;
 };
 
 export class DemoError extends Error {
@@ -88,28 +87,40 @@ export function parseCheckoutInput(values: FormData | Record<string, unknown>): 
 
 export function selectCatalogProduct(product: Product, priceId: string): CatalogSelection {
   // INTTEGRO:SECURITY [catalog-authority] Public input names only one bounded
-  // tier. Product identity, price identity, currency, and unit amount come from
-  // trusted configuration and the Product returned by Inttegro.
-  if (!product.active) {
-    throw new DemoError('configuration_error', 'The configured campaign product is not active.');
+  // tier. Product identity, price policy, currency, and selectable amounts come
+  // from trusted configuration and the Product returned by Inttegro.
+  if (!product.active || product.type !== 'cause') {
+    throw new DemoError(
+      'configuration_error',
+      'The configured campaign product must be an active cause.',
+    );
   }
   const price = product.prices?.find((candidate) => candidate.id === priceId && candidate.active);
+  const tierAmounts = Object.values(contributionTiers).map(({ selectedAmount }) => selectedAmount);
   if (
     !price
-    || price.nominal.currency.toLowerCase() !== 'ghs'
-    || price.nominal.value !== 5_000
+    || price.type !== 'customer_selected_amount'
+    || price.customerSelectedAmount.currency.toLowerCase() !== 'ghs'
+    || tierAmounts.some((amount) => amount < price.customerSelectedAmount.minimum)
+    || (
+      price.customerSelectedAmount.maximum !== undefined
+      && tierAmounts.some((amount) => amount > price.customerSelectedAmount.maximum!)
+    )
+    || tierAmounts.some(
+      (amount) => !price.customerSelectedAmount.suggestedAmounts?.some(
+        (suggestion) => suggestion.value === amount,
+      ),
+    )
   ) {
     throw new DemoError(
       'configuration_error',
-      'The campaign requires an active GHS 50 base contribution price.',
+      'The campaign requires an active GHS customer-selected price with the visible suggestions.',
     );
   }
   return {
-    type: product.type,
-    name: product.name,
-    ...(product.about ? { about: product.about } : {}),
-    ...(product.reference ? { reference: product.reference } : {}),
-    price: price.nominal,
+    productId: product.id,
+    priceId: price.id,
+    currency: price.customerSelectedAmount.currency,
   };
 }
 
@@ -140,12 +151,17 @@ export function buildOrderRequest(
     lineItems: [{
       type: 'product',
       product: {
-        // INTTEGRO:DECISION [catalog-snapshot] Snapshot the trusted catalogue
-        // item and multiply it only by an allow-listed server-owned quantity.
-        // INTTEGRO:ALTERNATIVE [catalog-snapshot] Use product_id plus price_id
-        // when the selected SDK surface exposes that catalogue-reference union.
-        ...product,
-        quantity: contributionTiers[input.tier].quantity,
+        // INTTEGRO:DECISION [catalog-snapshot] Keep the configured Product and
+        // Price policy coupled to the server-owned amount chosen by this tier.
+        productId: product.productId,
+        customerSelectedPrice: {
+          priceId: product.priceId,
+          selectedAmount: {
+            currency: product.currency,
+            value: contributionTiers[input.tier].selectedAmount,
+          },
+        },
+        quantity: 1,
       },
     }],
     customData: {

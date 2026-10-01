@@ -2,6 +2,7 @@ import {
   InttegroAPIError,
   InttegroClient,
   type CreateOrderRequest,
+  type Currency,
   type Product,
 } from '@inttegro/inttegro-sdk';
 
@@ -21,9 +22,9 @@ import {
  */
 
 const tiers = {
-  seed: { quantity: 1 },
-  grower: { quantity: 2 },
-  steward: { quantity: 5 },
+  seed: { selectedAmount: 5_000 },
+  grower: { selectedAmount: 10_000 },
+  steward: { selectedAmount: 25_000 },
 } as const;
 
 type Tier = keyof typeof tiers;
@@ -37,11 +38,9 @@ type CheckoutInput = {
 };
 
 type CatalogSelection = {
-  type: Product['type'];
-  name: string;
-  about?: string;
-  reference?: string;
-  price: NonNullable<Product['prices']>[number]['nominal'];
+  productId: string;
+  priceId: string;
+  currency: Currency;
 };
 
 export class DemoError extends Error {
@@ -76,19 +75,34 @@ export function parseCheckoutInput(values: FormData | Record<string, unknown>): 
 
 export function selectCatalogProduct(product: Product, priceId: string): CatalogSelection {
   // INTTEGRO:SECURITY [catalog-authority] Public input names a bounded tier,
-  // never a price, quantity, currency, or Product ID. The Worker owns and
+  // never a price, amount, currency, or Product ID. The Worker owns and
   // validates those values before creating the Order.
-  if (!product.active) throw new DemoError('configuration_error', 'The configured campaign product is not active.');
+  if (!product.active || product.type !== 'cause') {
+    throw new DemoError('configuration_error', 'The configured campaign product must be an active cause.');
+  }
   const price = product.prices?.find((candidate) => candidate.id === priceId && candidate.active);
-  if (!price || price.nominal.currency.toLowerCase() !== 'ghs' || price.nominal.value !== 5_000) {
-    throw new DemoError('configuration_error', 'The campaign requires an active GHS 50 base contribution price.');
+  const tierAmounts = Object.values(tiers).map(({ selectedAmount }) => selectedAmount);
+  if (
+    !price
+    || price.type !== 'customer_selected_amount'
+    || price.customerSelectedAmount.currency.toLowerCase() !== 'ghs'
+    || tierAmounts.some((amount) => amount < price.customerSelectedAmount.minimum)
+    || (
+      price.customerSelectedAmount.maximum !== undefined
+      && tierAmounts.some((amount) => amount > price.customerSelectedAmount.maximum!)
+    )
+    || tierAmounts.some(
+      (amount) => !price.customerSelectedAmount.suggestedAmounts?.some(
+        (suggestion) => suggestion.value === amount,
+      ),
+    )
+  ) {
+    throw new DemoError('configuration_error', 'The campaign requires an active GHS customer-selected price with the visible suggestions.');
   }
   return {
-    type: product.type,
-    name: product.name,
-    ...(product.about ? { about: product.about } : {}),
-    ...(product.reference ? { reference: product.reference } : {}),
-    price: price.nominal,
+    productId: product.id,
+    priceId: price.id,
+    currency: price.customerSelectedAmount.currency,
   };
 }
 
@@ -105,7 +119,20 @@ export function buildOrderRequest(input: CheckoutInput, origin: string, product:
     // authorization and campaign-close design.
     finalize: true,
     checkoutSettings: { redirectUrl: `${origin}/complete`, cancelUrl: `${origin}/cancel` },
-    lineItems: [{ type: 'product', product: { ...product, quantity: tiers[input.tier].quantity } }],
+    lineItems: [{
+      type: 'product',
+      product: {
+        productId: product.productId,
+        customerSelectedPrice: {
+          priceId: product.priceId,
+          selectedAmount: {
+            currency: product.currency,
+            value: tiers[input.tier].selectedAmount,
+          },
+        },
+        quantity: 1,
+      },
+    }],
     customData: { campaign: 'riverbend-learning-garden', contributionTier: input.tier },
   };
 }

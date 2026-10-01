@@ -1,9 +1,9 @@
 import { IsEmail, IsIn, IsString, Length, Matches } from 'class-validator';
 
 export const campaignTiers = {
-  seed: { label: 'Seed the garden', quantity: 1, displayAmount: 'GHS 50' },
-  grower: { label: 'Help it grow', quantity: 2, displayAmount: 'GHS 100' },
-  steward: { label: 'Become a steward', quantity: 5, displayAmount: 'GHS 250' },
+  seed: { label: 'Seed the garden', selectedAmount: 5_000, displayAmount: 'GHS 50' },
+  grower: { label: 'Help it grow', selectedAmount: 10_000, displayAmount: 'GHS 100' },
+  steward: { label: 'Become a steward', selectedAmount: 25_000, displayAmount: 'GHS 250' },
 } as const;
 
 export type CampaignTier = keyof typeof campaignTiers;

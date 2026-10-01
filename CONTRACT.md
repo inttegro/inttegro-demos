@@ -21,7 +21,7 @@ The order request must use:
 - an idempotency key derived from the submitted checkout attempt ID;
 - integer minor units (`5000` means GHS 50.00);
 - `finalize: true`;
-- an inline line item whose product type and name match the visible app story;
+- a line item whose product type and name match the visible app story;
 - explicit redirect and cancellation URLs; and
 - the hosted checkout URL returned by Inttegro rather than one constructed by
   the demo; and
@@ -43,19 +43,21 @@ The browser must load executable Checkout code only from the fixed, versioned
 
 The checkout form contains `name`, `email`, `phone`, and `attempt_id`.
 Storefront, ticketing, and invoice stories use one fixed GHS 50.00 purchase so
-integrations remain comparable. Openfield adds a server-validated tier whose
-only effect is the line-item quantity:
+integrations remain comparable. Openfield uses a catalog `cause` Product and a
+server-validated tier whose only effect is the amount selected under its saved
+`customer_selected_amount` Price policy:
 
 | Story | API line item | Product type |
 | --- | --- | --- |
 | Kora Market | `Dawn Brew Set` | `physical` |
 | Afterglow Sessions | `Afterglow Sessions - Courtyard admission` | `digital` |
 | Ledgerline | `Invoice INV-2048` | `service` |
-| Openfield | Configured campaign Product | Configured Product type |
+| Openfield | Configured campaign Product and Price | `cause` |
 
-Each configured Price is GHS `5000` minor units. The first three stories use
-quantity `1`; Openfield maps its three allow-listed tiers to quantities `1`,
-`2`, and `5`. Visible product names, totals, fulfillment language, and API
+The first three stories use fixed GHS `5000` prices and quantity `1`. Openfield
+requires a GHS customer-selected Price whose range includes `5000` through
+`25000`, whose suggestions include `5000`, `10000`, and `25000`, and always
+uses quantity `1`. Visible product names, totals, fulfillment language, and API
 requests must agree.
 
 Applications must trim input, reject missing fields, require a syntactically

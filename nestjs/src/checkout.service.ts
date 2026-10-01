@@ -5,10 +5,11 @@ import {
   InttegroAPIError,
   InttegroClient,
   type CreateOrderRequest,
+  type Currency,
   type Product,
 } from '@inttegro/inttegro-sdk';
 
-import { campaignTiers, CheckoutDto, type CampaignTier } from './checkout.dto.js';
+import { campaignTiers, CheckoutDto } from './checkout.dto.js';
 
 /**
  * Inttegro integration map
@@ -29,8 +30,6 @@ import { campaignTiers, CheckoutDto, type CampaignTier } from './checkout.dto.js
  * rationale and machine-readable alternatives.
  */
 
-const BASE_CONTRIBUTION = { currency: 'ghs', value: 5_000 } as const;
-
 export class DemoError extends Error {
   constructor(
     readonly code: 'configuration_error' | 'validation_error' | 'api_error',
@@ -41,11 +40,9 @@ export class DemoError extends Error {
 }
 
 type CatalogSelection = {
-  type: Product['type'];
-  name: string;
-  about?: string;
-  reference?: string;
-  price: NonNullable<Product['prices']>[number]['nominal'];
+  productId: string;
+  priceId: string;
+  currency: Currency;
 };
 
 export async function parseCheckoutInput(body: Record<string, unknown>): Promise<CheckoutDto> {
@@ -71,28 +68,40 @@ export async function parseCheckoutInput(body: Record<string, unknown>): Promise
 
 export function selectCatalogProduct(product: Product, priceId: string): CatalogSelection {
   // INTTEGRO:SECURITY [catalog-authority] The form supplies only a bounded tier
-  // key. Product identity, unit price, and currency are resolved and checked on
-  // the trusted server, preventing a caller from rewriting the contribution.
-  if (!product.active) {
-    throw new DemoError('configuration_error', 'The configured campaign product is not active.');
+  // key. Product identity, the saved price policy, and currency are resolved
+  // and checked on the trusted server.
+  if (!product.active || product.type !== 'cause') {
+    throw new DemoError(
+      'configuration_error',
+      'The configured campaign product must be an active cause.',
+    );
   }
   const price = product.prices?.find((candidate) => candidate.id === priceId && candidate.active);
+  const tierAmounts = Object.values(campaignTiers).map(({ selectedAmount }) => selectedAmount);
   if (
-    !price ||
-    price.nominal.currency.toLowerCase() !== BASE_CONTRIBUTION.currency ||
-    price.nominal.value !== BASE_CONTRIBUTION.value
+    !price
+    || price.type !== 'customer_selected_amount'
+    || price.customerSelectedAmount.currency.toLowerCase() !== 'ghs'
+    || tierAmounts.some((amount) => amount < price.customerSelectedAmount.minimum)
+    || (
+      price.customerSelectedAmount.maximum !== undefined
+      && tierAmounts.some((amount) => amount > price.customerSelectedAmount.maximum!)
+    )
+    || tierAmounts.some(
+      (amount) => !price.customerSelectedAmount.suggestedAmounts?.some(
+        (suggestion) => suggestion.value === amount,
+      ),
+    )
   ) {
     throw new DemoError(
       'configuration_error',
-      'The campaign requires an active GHS 50 base contribution price.',
+      'The campaign requires an active GHS customer-selected price with the visible suggestions.',
     );
   }
   return {
-    type: product.type,
-    name: product.name,
-    ...(product.about ? { about: product.about } : {}),
-    ...(product.reference ? { reference: product.reference } : {}),
-    price: price.nominal,
+    productId: product.id,
+    priceId: price.id,
+    currency: price.customerSelectedAmount.currency,
   };
 }
 
@@ -127,11 +136,17 @@ export function buildOrderRequest(
     lineItems: [{
       type: 'product',
       product: {
-        // INTTEGRO:DECISION [catalog-snapshot] Snapshot the verified catalogue
-        // item and use a server-owned tier multiplier. Do not accept arbitrary
-        // price, currency, quantity, or product fields from the public form.
-        ...product,
-        quantity: tier.quantity,
+        // INTTEGRO:DECISION [catalog-snapshot] Couple the configured Product and
+        // Price policy to the server-owned amount represented by this tier.
+        productId: product.productId,
+        customerSelectedPrice: {
+          priceId: product.priceId,
+          selectedAmount: {
+            currency: product.currency,
+            value: tier.selectedAmount,
+          },
+        },
+        quantity: 1,
       },
     }],
     customData: {

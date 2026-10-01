@@ -16,7 +16,7 @@ general-purpose hosts are not presented as equivalent deployment options.
 - Web-standard `Request`, `Response`, `FormData`, and URL handling
 - an Inttegro API key held only as a Cloudflare Worker secret
 - trusted Product and Price lookup inside the Worker
-- bounded supporter tiers mapped to server-owned quantities
+- bounded supporter tiers mapped to amounts under a saved Price policy
 - retry-safe idempotency and a readable `OPENFIELD-…` order number
 - a minimal JSON Order reference for embedded/modal Checkout and a resilient
   `303` hosted-page fallback
@@ -36,10 +36,13 @@ browser without JavaScript. The shared client boundary is
 
 ## Configure the campaign Product
 
-Create and publish a service Product named `Riverbend Learning Garden
-contribution` with an active Price of exactly **GHS 50**. The visible GHS 50,
-100, and 250 tiers are trusted quantities of that catalogue unit. The form
-never submits a Product ID, currency, price, or arbitrary quantity.
+Create and publish a `cause` Product named `Riverbend Learning Garden
+contribution` with an active `customer_selected_amount` Price in GHS. Set its
+minimum no higher than **GHS 50**, its maximum no lower than **GHS 250**, and
+include **GHS 50**, **GHS 100**, and **GHS 250** as suggested amounts. The
+Worker maps each visible tier to one of those suggestions and couples that
+amount to the configured Product and Price IDs. The form never submits a
+Product ID, currency, price, or arbitrary amount.
 
 For local development, copy `.env.example` to `.dev.vars` and provide:
 

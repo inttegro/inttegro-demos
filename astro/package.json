@@ -8,13 +8,15 @@
     "build": "astro build",
     "start": "node scripts/start.mjs",
     "preview": "astro preview --host 0.0.0.0 --port 3014",
+    "smoke:cause": "node scripts/smoke-customer-selected-cause.mjs smoke",
+    "provision:cause": "node scripts/smoke-customer-selected-cause.mjs provision",
     "typecheck": "astro check",
     "test": "tsx --test test/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "@astrojs/node": "11.1.5",
-    "@inttegro/inttegro-sdk": "8.2.0",
+    "@inttegro/inttegro-sdk": "11.2.0",
     "astro": "7.3.2"
   },
   "devDependencies": {

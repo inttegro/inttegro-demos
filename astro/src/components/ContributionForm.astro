@@ -26,9 +26,9 @@ const { attemptId, error } = Astro.props;
       <input type="hidden" name="attempt_id" value={attemptId} />
       <fieldset>
         <legend class="sr-only">Contribution amount</legend>
-        <label class="tier"><input type="radio" name="tier" value="seed" checked /><span><strong>GHS 50</strong><small>Seed the garden</small></span><i>One contribution unit</i></label>
-        <label class="tier"><input type="radio" name="tier" value="grower" /><span><strong>GHS 100</strong><small>Help it grow</small></span><i>Two contribution units</i></label>
-        <label class="tier"><input type="radio" name="tier" value="steward" /><span><strong>GHS 250</strong><small>Become a steward</small></span><i>Five contribution units</i></label>
+        <label class="tier"><input type="radio" name="tier" value="seed" checked /><span><strong>GHS 50</strong><small>Seed the garden</small></span><i>Suggested contribution</i></label>
+        <label class="tier"><input type="radio" name="tier" value="grower" /><span><strong>GHS 100</strong><small>Help it grow</small></span><i>Recommended contribution</i></label>
+        <label class="tier"><input type="radio" name="tier" value="steward" /><span><strong>GHS 250</strong><small>Become a steward</small></span><i>Suggested contribution</i></label>
       </fieldset>
       <div class="fields">
         <label>Full name<input name="name" value="Akua Mensah" autocomplete="name" required /></label>

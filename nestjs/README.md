@@ -16,7 +16,7 @@ evidence of payment.
 - a validated DTO boundary using `class-validator`
 - an injected checkout service that keeps the Inttegro key server-side
 - server-side Product and Price lookup before Order creation
-- a bounded tier translated to a trusted quantity rather than a public amount
+- a bounded tier translated to a trusted amount under a saved Price policy
 - a retry-stable idempotency key and readable merchant order number
 - explicit completion and cancellation URLs
 - a focused Svelte island that owns payment UI state without reimplementing the
@@ -48,10 +48,13 @@ NestJS order boundary unchanged.
 
 ## Configure the campaign Product
 
-Create and publish a service Product named `Riverbend Learning Garden
-contribution` with an active recurring-free Price of exactly **GHS 50**. The
-three visible tiers multiply that trusted unit price by 1, 2, or 5 on the
-server. A public request cannot choose an arbitrary amount or Product.
+Create and publish a `cause` Product named `Riverbend Learning Garden
+contribution` with an active `customer_selected_amount` Price in GHS. Set its
+minimum no higher than **GHS 50**, its maximum no lower than **GHS 250**, and
+include **GHS 50**, **GHS 100**, and **GHS 250** as suggested amounts. The
+server maps each visible tier to one of those suggestions and couples that
+amount to the configured Product and Price IDs. A public request cannot choose
+an arbitrary amount, Product, Price, or currency.
 
 Copy `.env.example` to `.env` and set:
 

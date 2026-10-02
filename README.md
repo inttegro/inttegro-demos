@@ -1,16 +1,44 @@
-# Inttegro demo applications
+# Inttegro checkout demos
 
-This directory contains production-shaped applications that demonstrate how to
-integrate Inttegro inside experiences customers would genuinely use. They share
-one security and checkout contract, but each story has a real product context,
-responsive information architecture, accessible states, and its own visual
-identity.
+[![release](https://img.shields.io/github/v/release/inttegro/inttegro-demos?label=release)](https://github.com/inttegro/inttegro-demos/releases/latest)
+[![live catalogue](https://img.shields.io/website?url=https%3A%2F%2Fdemos.inttegro.dev&label=live%20catalogue)](https://demos.inttegro.dev)
+[![license](https://img.shields.io/github/license/inttegro/inttegro-demos)](./LICENSE)
 
-The repository is designed to live at `demos/` in the Commerce checkout. The
-web and server examples can also be cloned and run independently. Until the
-mobile SDKs and Java SDK 5.0.0 are published, the SwiftUI, Compose, Flutter,
-React Native, and Spring Boot examples resolve those SDKs from the parent
-Commerce checkout.
+See GHS checkout and Ghana Mobile Money payments running inside complete stores,
+ticketing flows, invoices, fundraisers, and native mobile experiences—not
+isolated API snippets.
+
+[Explore the live catalogue](https://demos.inttegro.dev) ·
+[Start with the TypeScript SDK](https://github.com/inttegro/inttegro-sdk-typescript) ·
+[Read the integration guides](https://studio.inttegro.com/sdks/typescript)
+
+## Choose a working example
+
+The live applications below are deployed from this repository. Start with
+Next.js for the shortest route from clone to checkout, or choose the stack your
+service already uses.
+
+| Stack | Customer story | Live application | Source |
+| --- | --- | --- | --- |
+| **Next.js + TypeScript** | Kora Market storefront | [Try checkout](https://nextjs-demo.inttegro.dev) | [Open source](./nextjs) |
+| Express + TypeScript | Afterglow Sessions tickets | [Reserve a ticket](https://express-demo.inttegro.dev) | [Open source](./express) |
+| Nuxt + TypeScript | Kora Market storefront | [Try checkout](https://nuxt-demo.inttegro.dev) | [Open source](./nuxt) |
+| NestJS + TypeScript | Openfield fundraiser | [Make a contribution](https://nestjs-demo.inttegro.dev) | [Open source](./nestjs) |
+| RedwoodSDK + TypeScript | Openfield fundraiser | [Make a contribution](https://redwoodsdk-demo.inttegro.dev) | [Open source](./redwoodsdk) |
+| Astro + TypeScript | Openfield fundraiser | [Make a contribution](https://astro-demo.inttegro.dev) | [Open source](./astro) |
+| Django + Python | Afterglow Sessions tickets | [Reserve a ticket](https://django-demo.inttegro.dev) | [Open source](./django) |
+| FastAPI + Python | Afterglow Sessions tickets | [Reserve a ticket](https://fastapi-demo.inttegro.dev) | [Open source](./fastapi) |
+| Go | Ledgerline invoice | [Pay an invoice](https://go-demo.inttegro.dev) | [Open source](./go) |
+| Rails + Ruby | Kora Market storefront | [Try checkout](https://rails-demo.inttegro.dev) | [Open source](./rails) |
+| Laravel + PHP | Kora Market storefront | [Try checkout](https://laravel-demo.inttegro.dev) | [Open source](./laravel) |
+
+Every story uses the same production-minded security boundary: secret keys stay
+on the server, prices are resolved from the trusted Inttegro catalogue, and the
+browser return is never treated as authoritative payment proof. The applications
+remain individually cloneable even though they share fixtures, artwork, and
+contract checks in this repository.
+
+If these examples shorten your integration, [star the repository](https://github.com/inttegro/inttegro-demos) so other developers can find them.
 
 ## Product stories
 

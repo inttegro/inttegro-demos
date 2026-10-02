@@ -4,9 +4,8 @@
 [![live catalogue](https://img.shields.io/website?url=https%3A%2F%2Fdemos.inttegro.dev&label=live%20catalogue)](https://demos.inttegro.dev)
 [![license](https://img.shields.io/github/license/inttegro/inttegro-demos)](./LICENSE)
 
-See GHS checkout and Ghana Mobile Money payments running inside complete stores,
-ticketing flows, invoices, fundraisers, and native mobile experiences—not
-isolated API snippets.
+See Inttegro integrations running inside complete stores, ticketing flows,
+invoices, fundraisers, and native mobile experiences—not isolated API snippets.
 
 [Explore the live catalogue](https://demos.inttegro.dev) ·
 [Start with the TypeScript SDK](https://github.com/inttegro/inttegro-sdk-typescript) ·

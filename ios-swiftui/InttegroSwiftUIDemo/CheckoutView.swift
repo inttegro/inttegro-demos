@@ -24,6 +24,17 @@ private let paymentSheetLogger = Logger(
     category: "PaymentSheet"
 )
 
+private var demoMerchantName: String {
+#if DEBUG
+    let environment = ProcessInfo.processInfo.environment
+    if ["1", "features"].contains(environment["INTTEGRO_STUDIO_SCREENSHOTS"] ?? ""),
+       let name = environment["INTTEGRO_STUDIO_MERCHANT"], !name.isEmpty {
+        return name
+    }
+#endif
+    return "Kora Market"
+}
+
 struct CheckoutView: View {
     private let finishes = ["Sunrise", "Night earth", "River sand"]
 
@@ -68,7 +79,7 @@ struct CheckoutView: View {
             }
             .background(Color(.systemGroupedBackground))
             .scrollIndicators(.hidden)
-            .navigationTitle("Kora Market")
+            .navigationTitle(demoMerchantName)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .safeAreaInset(edge: .bottom) { checkoutBar }
@@ -403,7 +414,7 @@ private struct StudioScreenshotPaymentSheetAdapter: PaymentSheetAdapter {
         return PaymentSheetSession(
             id: "or_studio_screenshot",
             merchant: .init(
-                displayName: "Kora Market",
+                displayName: demoMerchantName,
                 supportText: nil
             ),
             amount: .init(value: 5_000, currency: "GHS"),

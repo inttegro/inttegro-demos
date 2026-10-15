@@ -60,6 +60,9 @@ numeric keyboard that appears automatically on a physical iPhone.
 The switch is compiled only in Debug builds. Release builds always use the
 SDK's live Checkout adapter.
 
+For branded documentation captures, `INTTEGRO_STUDIO_MERCHANT` can override
+the demo merchant name only while this Debug screenshot mode is active.
+
 The standard fixture opens without an attached payment method, so the first
 screenshot documents the experience a new payer sees. The SDK begins at a
 compact account-entry detent that keeps **Save for next time** and the disabled

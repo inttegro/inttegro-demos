@@ -18,7 +18,7 @@
     "@inttegro/inttegro-sdk": "7.0.0",
     "@inttegro/react": "0.2.0",
     "@opennextjs/cloudflare": "1.20.6",
-    "next": "16.3.4",
+    "next": "16.4.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

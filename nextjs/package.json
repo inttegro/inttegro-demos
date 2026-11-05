@@ -17,7 +17,7 @@
   "dependencies": {
     "@inttegro/inttegro-sdk": "7.0.0",
     "@inttegro/react": "0.2.0",
-    "@opennextjs/cloudflare": "1.20.6",
+    "@opennextjs/cloudflare": "1.20.16",
     "next": "16.4.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -28,7 +28,11 @@
     "@types/react-dom": "^19.0.0",
     "cross-env": "10.1.0",
     "typescript": "7.0.2",
-    "wrangler": "4.129.0"
+    "wrangler": "4.157.0"
+  },
+  "overrides": {
+    "glob": "^14.0.2",
+    "source-map-js": "^1.2.2"
   },
   "engines": {
     "node": ">=24"

@@ -13,6 +13,7 @@ export function Document({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.svg" />
         <link rel="stylesheet" href="/styles.css" />
         <link rel="stylesheet" href="/checkout-presentations.css" />
+        <script src="/demo-ui.js" defer />
       </head>
       <body>
         {children}

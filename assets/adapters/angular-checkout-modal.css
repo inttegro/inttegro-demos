@@ -1,0 +1,53 @@
+/* Angular owns this application modal while @inttegro/angular mounts the
+   hosted Checkout iframe inside it. The application is responsible for the
+   dialog's focus, chrome, and dismissal. */
+.framework-checkout-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(860px, calc(100dvh - 32px));
+  margin: auto;
+  padding: 18px;
+  border: 1px solid rgba(255, 122, 31, 0.24);
+  border-radius: 24px;
+  background: #0d1029;
+  color: #f9f5e9;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52);
+}
+
+.framework-checkout-dialog::backdrop {
+  background: rgba(3, 4, 14, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.framework-checkout-dialog-close {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 12px auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: background-color 120ms ease, opacity 120ms ease;
+}
+
+.framework-checkout-dialog-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 1;
+}
+
+.framework-checkout-dialog-close:focus-visible {
+  outline: 3px solid #ff7a1f;
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.framework-checkout-dialog-close span {
+  font-size: 24px;
+  line-height: 1;
+}

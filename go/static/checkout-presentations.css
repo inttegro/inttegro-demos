@@ -14,7 +14,7 @@
   margin-bottom: 8px;
   color: var(--muted);
   font-size: 12px;
-  font-weight: 740;
+  font-weight: 500;
   letter-spacing: 0.02em;
 }
 
@@ -71,7 +71,7 @@
 .checkout-presentation-options strong {
   overflow: hidden;
   font-size: 10px;
-  font-weight: 780;
+  font-weight: 500;
   letter-spacing: -0.01em;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -37,7 +37,12 @@ describe('Nuxt checkout', () => {
       name: 'Dawn Brew Set',
       active: true,
       created_at: '2026-09-06T00:00:00Z',
-      prices: [{ id: 'pr_demo', active: false, nominal: { currency: 'ghs', value: 5000 } }],
+      prices: [{
+        id: 'pr_demo',
+        active: false,
+        type: 'fixed_amount',
+        fixedAmount: { currency: 'ghs', value: 5000 },
+      }],
     }, 'pr_demo')).toThrow(/configured demo price/);
   });
 });

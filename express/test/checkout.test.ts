@@ -37,7 +37,12 @@ test('uses only the configured active catalogue price', () => {
     name: 'Afterglow Sessions — Courtyard Admission',
     active: true,
     created_at: '2026-09-06T00:00:00Z',
-    prices: [{ id: 'pr_demo', active: true, nominal: { currency: 'ghs', value: 5000 } }],
+    prices: [{
+      id: 'pr_demo',
+      active: true,
+      type: 'fixed_amount',
+      fixedAmount: { currency: 'ghs', value: 5000 },
+    }],
   }, 'pr_demo');
   assert.deepEqual(selected, { productId: 'prod_demo', priceId: 'pr_demo' });
   assert.throws(() => selectCatalogProduct({

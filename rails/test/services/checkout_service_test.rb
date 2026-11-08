@@ -36,7 +36,8 @@ class CheckoutServiceTest < ActiveSupport::TestCase
       prices: [Inttegro::ProductPriceSummary.new(
         id: "pr_demo",
         active: true,
-        nominal: Inttegro::Amount.new(currency: Inttegro::Currency::GHS, value: 5000)
+        type: Inttegro::Price::Type::FIXED_AMOUNT,
+        fixed_amount: Inttegro::Amount.new(currency: Inttegro::Currency::GHS, value: 5000)
       )]
     )
 

@@ -61,9 +61,9 @@ public class CheckoutService {
                 .findFirst()
                 .orElse(null);
         // This SDK version does not expose the price's active flag in a Product
-        // summary. Require an explicit ID match and positive nominal; newer SDKs
+        // summary. Require an explicit ID match and positive fixed amount; newer SDKs
         // should also require the returned Price to be active.
-        if (price == null || price.nominal == null || price.nominal.value == null || price.nominal.value <= 0) {
+        if (price == null || price.fixedAmount == null || price.fixedAmount.value == null || price.fixedAmount.value <= 0) {
             throw new DemoException("configuration_error", "The configured demo price is not available for this product.");
         }
         return new CatalogSelection(
@@ -71,7 +71,7 @@ public class CheckoutService {
                 product.name,
                 product.about,
                 product.reference,
-                PriceParams.of(price.nominal.currency, price.nominal.value));
+                PriceParams.of(price.fixedAmount.currency, price.fixedAmount.value));
     }
 
     static OrderCreateParams buildOrderRequest(CheckoutForm form, String origin, CatalogSelection product) {

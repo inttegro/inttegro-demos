@@ -66,7 +66,7 @@ def test_async_checkout_awaits_catalog_and_order_resources():
                     SimpleNamespace(
                         id="pr_demo123",
                         active=True,
-                        nominal=SimpleNamespace(currency=Currency.GHS, value=5000),
+                        fixed_amount=SimpleNamespace(currency=Currency.GHS, value=5000),
                     )
                 ],
             )

@@ -1,4 +1,10 @@
-import { InttegroAPIError, InttegroClient, type CreateOrderRequest, type Product } from '@inttegro/inttegro-sdk';
+import {
+  InttegroAPIError,
+  InttegroClient,
+  type Amount,
+  type CreateOrderRequest,
+  type Product,
+} from '@inttegro/inttegro-sdk';
 
 /**
  * Inttegro integration map
@@ -29,7 +35,7 @@ export type CatalogSelection = {
   name: string;
   about?: string;
   reference?: string;
-  price: NonNullable<Product['prices']>[number]['nominal'];
+  price: Amount;
 };
 
 function merchantOrderNumber(prefix: string, attemptId: string): string {
@@ -49,7 +55,12 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
   // it cannot swap catalogue records or tamper with the price.
   if (!product.active) throw new DemoError('configuration_error', 'The configured demo product is not active.');
   const price = product.prices?.find(candidate => candidate.id === priceId && candidate.active);
-  if (!price || !Number.isSafeInteger(price.nominal.value) || price.nominal.value <= 0) {
+  if (
+    !price
+    || price.type !== 'fixed_amount'
+    || !Number.isSafeInteger(price.fixedAmount.value)
+    || price.fixedAmount.value <= 0
+  ) {
     throw new DemoError('configuration_error', 'The configured demo price is not active for this product.');
   }
   return {
@@ -57,7 +68,7 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
     name: product.name,
     ...(product.about ? { about: product.about } : {}),
     ...(product.reference ? { reference: product.reference } : {}),
-    price: price.nominal,
+    price: price.fixedAmount,
   };
 }
 

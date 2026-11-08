@@ -74,14 +74,14 @@ def select_catalog_product(product, price_id: str) -> CatalogSelection:
     if not product.active:
         raise DemoError("configuration_error", "The configured demo product is not active.")
     price = next((candidate for candidate in (product.prices or []) if candidate.id == price_id and candidate.active), None)
-    if price is None or price.nominal.value <= 0:
+    if price is None or price.fixed_amount is None or price.fixed_amount.value <= 0:
         raise DemoError("configuration_error", "The configured demo price is not active for this product.")
     return CatalogSelection(
         type=product.type,
         name=product.name,
         about=product.about,
         reference=product.reference,
-        price=inttegro.PriceParams(currency=price.nominal.currency, value=price.nominal.value),
+        price=inttegro.PriceParams(currency=price.fixed_amount.currency, value=price.fixed_amount.value),
     )
 
 

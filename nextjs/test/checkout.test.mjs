@@ -86,8 +86,8 @@ test('selects only the configured active catalogue price', () => {
     active: true,
     created_at: '2026-09-06T00:00:00Z',
     prices: [
-      { id: 'pr_old', active: false, nominal: { currency: 'ghs', value: 4000 } },
-      { id: 'pr_demo', active: true, nominal: { currency: 'ghs', value: 5000 } },
+      { id: 'pr_old', active: false, type: 'fixed_amount', fixedAmount: { currency: 'ghs', value: 4000 } },
+      { id: 'pr_demo', active: true, type: 'fixed_amount', fixedAmount: { currency: 'ghs', value: 5000 } },
     ],
   }, 'pr_demo');
 

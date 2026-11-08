@@ -211,7 +211,7 @@ Each server demo reads `INTTEGRO_DEMO_PRODUCT_ID` and
 `INTTEGRO_DEMO_PRICE_ID` from trusted deployment configuration (Nuxt uses the
 equivalent `NUXT_` names). It calls the Products lookup operation at checkout,
 requires the configured Product to be active, and verifies that the configured
-Price belongs to it and has a positive nominal amount. The browser and mobile
+Price belongs to it and has a positive fixed amount. The browser and mobile
 apps send none of those values, so changing an input field or request body
 cannot select a different product or total.
 

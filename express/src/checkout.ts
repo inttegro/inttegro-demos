@@ -81,7 +81,12 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
   // trusted server so a caller cannot alter the ticket price.
   if (!product.active) throw new DemoError('configuration_error', 'The configured demo product is not active.');
   const price = product.prices?.find(candidate => candidate.id === priceId && candidate.active);
-  if (!price || !Number.isSafeInteger(price.nominal.value) || price.nominal.value <= 0) {
+  if (
+    !price
+    || price.type !== 'fixed_amount'
+    || !Number.isSafeInteger(price.fixedAmount.value)
+    || price.fixedAmount.value <= 0
+  ) {
     throw new DemoError('configuration_error', 'The configured demo price is not active for this product.');
   }
   return {

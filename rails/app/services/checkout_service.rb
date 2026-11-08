@@ -53,7 +53,7 @@ class CheckoutService
       raise DemoError.new("configuration_error", "The configured demo product is not active.") unless product.active
 
       price = product.prices&.find { |candidate| candidate.id == price_id && candidate.active }
-      unless price && price.nominal.value.positive?
+      unless price&.fixed_amount&.value&.positive?
         raise DemoError.new("configuration_error", "The configured demo price is not active for this product.")
       end
 
@@ -62,7 +62,10 @@ class CheckoutService
         name: product.name,
         about: product.about,
         reference: product.reference,
-        price: Inttegro::PriceParams.new(currency: price.nominal.currency, value: price.nominal.value)
+        price: Inttegro::PriceParams.new(
+          currency: price.fixed_amount.currency,
+          value: price.fixed_amount.value
+        )
       }.compact
     end
 

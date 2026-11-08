@@ -56,7 +56,7 @@ final class CheckoutService
                 break;
             }
         }
-        if ($selected === null || $selected->nominal->value <= 0) {
+        if ($selected === null || $selected->fixedAmount === null || $selected->fixedAmount->value <= 0) {
             throw new DemoError('configuration_error', 'The configured demo price is not active for this product.');
         }
 
@@ -65,7 +65,7 @@ final class CheckoutService
             'name' => $product->name,
             'about' => $product->about,
             'reference' => $product->reference,
-            'price' => new PriceParams($selected->nominal->currency, $selected->nominal->value),
+            'price' => new PriceParams($selected->fixedAmount->currency, $selected->fixedAmount->value),
         ];
     }
 

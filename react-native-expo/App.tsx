@@ -274,7 +274,7 @@ function describe(result: PaymentSheetResult): string {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: "#eee9df" },
+  screen: { flex: 1, backgroundColor: "#ffffff" },
   header: {
     alignItems: "center",
     flexDirection: "row",
@@ -290,21 +290,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 42,
   },
-  iconText: { color: "#183c32", fontSize: 20, fontWeight: "700" },
+  iconText: { color: "#183c32", fontSize: 20, fontWeight: "500" },
   brandRow: { alignItems: "center", flexDirection: "row", gap: 8 },
   brandMark: {
     alignItems: "center",
     backgroundColor: "#183c32",
-    borderRadius: 0,
+    borderRadius: 9,
     height: 36,
     justifyContent: "center",
     width: 36,
   },
-  brandLetter: { color: "#fffaf1", fontSize: 13, fontWeight: "800" },
+  brandLetter: { color: "#fffaf1", fontSize: 13, fontWeight: "500" },
   brand: {
     color: "#183c32",
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: "500",
     letterSpacing: 0.8,
     textTransform: "uppercase",
   },
@@ -319,11 +319,11 @@ const styles = StyleSheet.create({
     top: 3,
     width: 16,
   },
-  bagBadgeText: { color: "#fff", fontSize: 9, fontWeight: "800" },
+  bagBadgeText: { color: "#fff", fontSize: 9, fontWeight: "500" },
   content: { paddingBottom: 118 },
   editorialIntro: { paddingHorizontal: 20, paddingBottom: 34, paddingTop: 36 },
   overline: { borderTopColor: "rgba(27,32,28,.18)", borderTopWidth: 1, flexDirection: "row", justifyContent: "space-between", paddingTop: 10 },
-  overlineText: { color: "#686a63", fontSize: 9, fontWeight: "700", letterSpacing: 1.4 },
+  overlineText: { color: "#686a63", fontSize: 9, fontWeight: "500", letterSpacing: 1.4 },
   editorialTitle: { color: "#1b201c", fontSize: 54, fontWeight: "500", letterSpacing: -2.8, lineHeight: 50, marginTop: 54 },
   editorialTitleAccent: { color: "#a84d32", fontStyle: "italic" },
   hero: {
@@ -335,14 +335,14 @@ const styles = StyleSheet.create({
   heroImage: { height: "100%", width: "100%" },
   smallBatch: {
     backgroundColor: "rgba(255,250,241,.88)",
-    borderRadius: 0,
+    borderRadius: 18,
     left: 16,
     paddingHorizontal: 13,
     paddingVertical: 9,
     position: "absolute",
     top: 16,
   },
-  smallBatchText: { color: "#183c32", fontSize: 12, fontWeight: "700" },
+  smallBatchText: { color: "#183c32", fontSize: 12, fontWeight: "500" },
   favorite: {
     alignItems: "center",
     backgroundColor: "rgba(255,250,241,.9)",
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   favoriteActive: { color: "#b84831" },
   pressed: { opacity: 0.72, transform: [{ scale: 0.97 }] },
   details: { gap: 0, padding: 20, paddingTop: 28 },
-  objectLabel: { color: "#a84d32", fontSize: 9, fontWeight: "800", letterSpacing: 1.3, marginBottom: 14 },
+  objectLabel: { color: "#a84d32", fontSize: 9, fontWeight: "500", letterSpacing: 1.3, marginBottom: 14 },
   titleRow: { alignItems: "flex-start", flexDirection: "row", gap: 14 },
   title: {
     color: "#183c32",
@@ -380,10 +380,10 @@ const styles = StyleSheet.create({
     gap: 8,
     marginTop: 12,
   },
-  rating: { color: "#a65d16", fontSize: 13, fontWeight: "700" },
+  rating: { color: "#a65d16", fontSize: 13, fontWeight: "500" },
   muted: { color: "#69736d", fontSize: 13 },
   flex: { flex: 1 },
-  ready: { color: "#26855b", fontSize: 12, fontWeight: "700" },
+  ready: { color: "#26855b", fontSize: 12, fontWeight: "500" },
   description: {
     color: "#59665f",
     fontSize: 17,
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 28,
   },
-  sectionTitle: { color: "#183c32", fontSize: 16, fontWeight: "800" },
+  sectionTitle: { color: "#183c32", fontSize: 16, fontWeight: "500" },
   swatchRow: { flexDirection: "row", gap: 11, marginTop: 12 },
   swatchOuter: {
     alignItems: "center",
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
   },
   makerCard: {
     backgroundColor: "#394b3e",
-    borderRadius: 0,
+    borderRadius: 22,
     marginTop: 30,
     padding: 20,
   },
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     height: 1,
     marginVertical: 16,
   },
-  delivery: { color: "#fffaf1", fontSize: 13, fontWeight: "700" },
+  delivery: { color: "#fffaf1", fontSize: 13, fontWeight: "500" },
   status: {
     backgroundColor: "#dcece6",
     borderRadius: 18,
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   statusTitle: {
     color: "#183c32",
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "500",
     textTransform: "uppercase",
   },
   statusCopy: { color: "#36584d", fontSize: 14, lineHeight: 20, marginTop: 5 },
@@ -456,15 +456,15 @@ const styles = StyleSheet.create({
     right: 0,
   },
   totalLabel: { color: "#69736d", fontSize: 11 },
-  total: { color: "#183c32", fontSize: 17, fontWeight: "800" },
+  total: { color: "#183c32", fontSize: 17, fontWeight: "500" },
   payButton: {
     alignItems: "center",
     backgroundColor: "#183c32",
-    borderRadius: 0,
+    borderRadius: 999,
     flex: 1,
     justifyContent: "center",
     minHeight: 54,
   },
   payPressed: { opacity: 0.8, transform: [{ scale: 0.98 }] },
-  payText: { color: "#fff", fontSize: 16, fontWeight: "800" },
+  payText: { color: "#fff", fontSize: 16, fontWeight: "500" },
 });

@@ -77,7 +77,7 @@ struct CheckoutView: View {
                     productDetails
                 }
             }
-            .background(Color(.systemGroupedBackground))
+            .background(Color.white)
             .scrollIndicators(.hidden)
             .navigationTitle(demoMerchantName)
             .navigationBarTitleDisplayMode(.inline)
@@ -102,7 +102,7 @@ struct CheckoutView: View {
             .overlay(alignment: .top) { Divider() }
 
             Text("A slower,\nwarmer morning.")
-                .font(.system(size: 58, weight: .regular, design: .serif))
+                .font(.system(size: 56, weight: .medium, design: .default))
                 .tracking(-3)
                 .lineSpacing(-7)
                 .foregroundStyle(Color.koraInk)
@@ -127,7 +127,7 @@ struct CheckoutView: View {
                     .font(.caption.weight(.semibold))
                     .padding(.horizontal, 12)
                     .frame(height: 34)
-                    .background(.regularMaterial, in: Rectangle())
+                    .background(.regularMaterial, in: Capsule())
                 Spacer()
                 Button {
                     withAnimation(.spring(response: 0.28, dampingFraction: 1)) { isFavorite.toggle() }
@@ -151,11 +151,11 @@ struct CheckoutView: View {
                     .foregroundStyle(Color.koraClay)
                 HStack(alignment: .firstTextBaseline) {
                     Text("Dawn Brew Set")
-                        .font(.system(.largeTitle, design: .serif, weight: .medium))
+                        .font(.system(.largeTitle, design: .default, weight: .medium))
                         .tracking(-1.4)
                     Spacer()
                     Text("GHS 50")
-                        .font(.system(.title2, design: .serif, weight: .medium))
+                        .font(.system(.title2, design: .default, weight: .medium))
                 }
                 HStack(spacing: 7) {
                     Label("4.9", systemImage: "star.fill").foregroundStyle(.orange)
@@ -190,7 +190,7 @@ struct CheckoutView: View {
 
             VStack(alignment: .leading, spacing: 16) {
                 Label("Made by Ama Ofori", systemImage: "person.crop.circle")
-                    .font(.system(.title3, design: .serif, weight: .medium))
+                    .font(.system(.title3, design: .default, weight: .medium))
                 Text("Every piece keeps the subtle marks of its making. Local clay is fired to a food-safe finish, then packed without plastic for delivery across Ghana.")
                     .foregroundStyle(Color.white.opacity(0.72))
                     .lineSpacing(4)
@@ -203,7 +203,7 @@ struct CheckoutView: View {
                 .foregroundStyle(.white)
             }
             .padding(20)
-            .background(Color.koraMoss)
+            .background(Color.koraMoss, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
 
             if let outcome {
                 Label(outcome, systemImage: "checkmark.shield.fill")

@@ -65,7 +65,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -166,7 +165,7 @@ private fun KoraMarketScreen() {
         containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         topBar = {
             TopAppBar(
-                title = { Text("Kora Market", fontWeight = FontWeight.Bold) },
+                title = { Text("Kora Market", fontWeight = FontWeight.Medium) },
                 navigationIcon = {
                     Box {
                         IconButton(onClick = { showMenu = true }) { Icon(Icons.Default.Menu, "Open menu") }
@@ -200,7 +199,7 @@ private fun KoraMarketScreen() {
                 ) {
                     Column {
                         Text("Total", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text("GHS 50.00", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text("GHS 50.00", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
                     }
                     Button(
                         onClick = beginCheckout,
@@ -216,7 +215,7 @@ private fun KoraMarketScreen() {
                         }
                         Text(
                             if (isCreatingOrder) "Preparing checkout" else "Pay GHS 50.00",
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Medium,
                         )
                     }
                 }
@@ -240,8 +239,7 @@ private fun KoraMarketScreen() {
                     Text(
                         "A slower,\nwarmer morning.",
                         style = MaterialTheme.typography.displayMedium.copy(
-                            fontFamily = FontFamily.Serif,
-                            fontWeight = FontWeight.Normal,
+                            fontWeight = FontWeight.Medium,
                             lineHeight = 52.sp,
                         ),
                         color = Color(0xFF1B201C),
@@ -258,7 +256,7 @@ private fun KoraMarketScreen() {
                     )
                     Surface(
                         modifier = Modifier.align(Alignment.TopStart).padding(18.dp),
-                        shape = RoundedCornerShape(0.dp),
+                        shape = RoundedCornerShape(999.dp),
                         color = MaterialTheme.colorScheme.surface.copy(alpha = .86f),
                         tonalElevation = 4.dp,
                     ) { Text("Small batch", modifier = Modifier.padding(horizontal = 14.dp, vertical = 9.dp), style = MaterialTheme.typography.labelMedium) }
@@ -271,13 +269,13 @@ private fun KoraMarketScreen() {
             item {
                 Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("HAND-THROWN STONEWARE · HO, GHANA", color = Color(0xFFA84D32), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+                        Text("HAND-THROWN STONEWARE · HO, GHANA", color = Color(0xFFA84D32), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Medium)
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("Dawn Brew Set", style = MaterialTheme.typography.headlineLarge.copy(fontFamily = FontFamily.Serif), fontWeight = FontWeight.Medium, modifier = Modifier.weight(1f), maxLines = 2, overflow = TextOverflow.Ellipsis)
-                            Text("GHS 50", style = MaterialTheme.typography.titleLarge.copy(fontFamily = FontFamily.Serif), fontWeight = FontWeight.Medium)
+                            Text("Dawn Brew Set", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Medium, modifier = Modifier.weight(1f), maxLines = 2, overflow = TextOverflow.Ellipsis)
+                            Text("GHS 50", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Medium)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text("★ 4.9", color = Color(0xFFA65D16), fontWeight = FontWeight.SemiBold)
+                            Text("★ 4.9", color = Color(0xFFA65D16), fontWeight = FontWeight.Medium)
                             Text("240 reviews", color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(Modifier.weight(1f))
                             Icon(Icons.Default.CheckCircle, null, tint = Color(0xFF26855B), modifier = Modifier.size(17.dp))
@@ -286,7 +284,7 @@ private fun KoraMarketScreen() {
                     }
                     Text("A sculptural pour-over and cup, shaped by hand in Ho for slower mornings and more considered rituals.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyLarge)
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Row { Text("Finish", fontWeight = FontWeight.Bold); Spacer(Modifier.weight(1f)); Text(selectedFinish.name, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                        Row { Text("Finish", fontWeight = FontWeight.Medium); Spacer(Modifier.weight(1f)); Text(selectedFinish.name, color = MaterialTheme.colorScheme.onSurfaceVariant) }
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             finishes.forEach { finish ->
                                 val border by animateColorAsState(if (finish == selectedFinish) MaterialTheme.colorScheme.onSurface else Color.Transparent)
@@ -298,11 +296,11 @@ private fun KoraMarketScreen() {
                             }
                         }
                     }
-                    Card(shape = RoundedCornerShape(0.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF394B3E))) {
+                    Card(shape = RoundedCornerShape(22.dp), colors = CardDefaults.cardColors(containerColor = Color(0xFF394B3E))) {
                         Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Text("Made by Ama Ofori", style = MaterialTheme.typography.titleLarge.copy(fontFamily = FontFamily.Serif), color = Color.White, fontWeight = FontWeight.Medium)
+                            Text("Made by Ama Ofori", style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Medium)
                             Text("Every piece keeps the subtle marks of its making. Local clay is fired to a food-safe finish and packed without plastic.", color = Color.White.copy(alpha = .7f))
-                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) { Icon(Icons.Outlined.LocalShipping, null, tint = Color.White); Text("Delivery across Ghana in 2–4 days", color = Color.White, fontWeight = FontWeight.SemiBold) }
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) { Icon(Icons.Outlined.LocalShipping, null, tint = Color.White); Text("Delivery across Ghana in 2–4 days", color = Color.White, fontWeight = FontWeight.Medium) }
                         }
                     }
                     outcome?.let {
@@ -389,7 +387,7 @@ private fun KoraPreview() { KoraTheme { KoraMarketScreen() } }
 
 private val KoraLightColors = lightColorScheme(
     primary = Color(0xFF183C32), onPrimary = Color.White, secondary = Color(0xFFB84831),
-    surface = Color(0xFFFFFBF3), surfaceContainer = Color(0xFFF0E9DD), surfaceContainerLowest = Color(0xFFF8F3E9),
+    background = Color.White, surface = Color.White, surfaceContainer = Color(0xFFF7F4EE), surfaceContainerLowest = Color.White,
 )
 private val KoraDarkColors = darkColorScheme(primary = Color(0xFFA8D8C8), secondary = Color(0xFFFFB5A0))
 

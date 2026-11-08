@@ -38,9 +38,9 @@ class KoraMarketApp extends StatelessWidget {
           seedColor: forest,
           primary: forest,
           secondary: const Color(0xffb84831),
-          surface: const Color(0xfffffbf3),
+          surface: Colors.white,
         ),
-        scaffoldBackgroundColor: const Color(0xffeee9df),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
@@ -156,7 +156,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
           Navigator.pop(context);
         },
         children: const [
-          SafeArea(bottom: false, child: Padding(padding: EdgeInsets.fromLTRB(28, 24, 28, 18), child: Text('Kora Market', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800)))),
+          SafeArea(bottom: false, child: Padding(padding: EdgeInsets.fromLTRB(28, 24, 28, 18), child: Text('Kora Market', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)))),
           NavigationDrawerDestination(icon: Icon(Icons.auto_awesome), label: Text('New in')),
           NavigationDrawerDestination(icon: Icon(Icons.coffee_rounded), label: Text('Table')),
           NavigationDrawerDestination(icon: Icon(Icons.grid_view_rounded), label: Text('Textiles')),
@@ -175,7 +175,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
                 const Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text('Total', style: TextStyle(fontSize: 12)), Text('GHS 50.00', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800))],
+                  children: [Text('Total', style: TextStyle(fontSize: 12)), Text('GHS 50.00', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))],
                 ),
                 const SizedBox(width: 20),
                 Expanded(
@@ -186,7 +186,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
                       duration: const Duration(milliseconds: 180),
                       child: _busy
                           ? const SizedBox.square(key: ValueKey('busy'), dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                          : const Text('Pay with Inttegro', key: ValueKey('ready'), style: TextStyle(fontWeight: FontWeight.w700)),
+                          : const Text('Pay with Inttegro', key: ValueKey('ready'), style: TextStyle(fontWeight: FontWeight.w500)),
                     ),
                   ),
                 ),
@@ -202,7 +202,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
             expandedHeight: 560,
             backgroundColor: colors.surface,
             surfaceTintColor: colors.surface,
-            title: const Text('KORA MARKET', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 1)),
+            title: const Text('KORA MARKET', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1)),
             leading: Builder(
               builder: (context) => IconButton(icon: const Icon(Icons.menu_rounded), tooltip: 'Open menu', onPressed: Scaffold.of(context).openDrawer),
             ),
@@ -224,7 +224,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
                       label: const Text('Small batch'),
                       backgroundColor: colors.surface.withOpacity(.92),
                       side: BorderSide.none,
-                      shape: const RoundedRectangleBorder(),
+                      shape: const StadiumBorder(),
                     ),
                   ),
                   Positioned(
@@ -243,23 +243,23 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(20, 34, 20, 36),
             sliver: SliverList.list(children: [
-              const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('VOLTA STUDIO', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 1.4, color: Color(0xff686a63))), Text('OBJECT 01—03', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 1.4, color: Color(0xff686a63)))]),
+              const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('VOLTA STUDIO', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w500, letterSpacing: 1.4, color: Color(0xff686a63))), Text('OBJECT 01—03', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w500, letterSpacing: 1.4, color: Color(0xff686a63)))]),
               const SizedBox(height: 42),
               const Text('A slower,\nwarmer morning.', style: TextStyle(fontSize: 54, height: .92, fontWeight: FontWeight.w500, letterSpacing: -2.6, color: Color(0xff1b201c))),
               const SizedBox(height: 48),
-              const Text('HAND-THROWN STONEWARE · HO, GHANA', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w800, letterSpacing: 1.2, color: Color(0xffa84d32))),
+              const Text('HAND-THROWN STONEWARE · HO, GHANA', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w500, letterSpacing: 1.2, color: Color(0xffa84d32))),
               const SizedBox(height: 14),
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Expanded(child: Text('Dawn Brew Set', style: TextStyle(fontSize: 34, height: 1, fontWeight: FontWeight.w500, letterSpacing: -1.2))),
                 const SizedBox(width: 16),
-                Text('GHS 50', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+                Text('GHS 50', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500)),
               ]),
               const SizedBox(height: 12),
-              Row(children: [const Text('★ 4.9', style: TextStyle(color: Color(0xffa65d16), fontWeight: FontWeight.w700)), const SizedBox(width: 9), Text('240 reviews', style: TextStyle(color: colors.onSurfaceVariant)), const Spacer(), const Icon(Icons.check_circle, size: 18, color: Color(0xff26855b)), const SizedBox(width: 5), const Text('Ready to ship', style: TextStyle(color: Color(0xff26855b), fontWeight: FontWeight.w600))]),
+              Row(children: [const Text('★ 4.9', style: TextStyle(color: Color(0xffa65d16), fontWeight: FontWeight.w500)), const SizedBox(width: 9), Text('240 reviews', style: TextStyle(color: colors.onSurfaceVariant)), const Spacer(), const Icon(Icons.check_circle, size: 18, color: Color(0xff26855b)), const SizedBox(width: 5), const Text('Ready to ship', style: TextStyle(color: Color(0xff26855b), fontWeight: FontWeight.w500))]),
               const SizedBox(height: 24),
               Text('A sculptural pour-over and cup, shaped by hand in Ho for slower mornings and more considered rituals.', style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.55, color: colors.onSurfaceVariant)),
               const SizedBox(height: 28),
-              Row(children: [const Text('Finish', style: TextStyle(fontWeight: FontWeight.w800)), const Spacer(), Text(_finish, style: TextStyle(color: colors.onSurfaceVariant))]),
+              Row(children: [const Text('Finish', style: TextStyle(fontWeight: FontWeight.w500)), const Spacer(), Text(_finish, style: TextStyle(color: colors.onSurfaceVariant))]),
               const SizedBox(height: 12),
               Row(children: _finishes.map((finish) => Semantics(
                 label: finish.$1,
@@ -280,7 +280,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
               const SizedBox(height: 30),
               Card(
                 elevation: 0,
-                shape: const RoundedRectangleBorder(),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
                 color: const Color(0xff394b3e),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -289,7 +289,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
                     const SizedBox(height: 10),
                     const Text('Every piece keeps the subtle marks of its making. Local clay is fired to a food-safe finish and packed without plastic.', style: TextStyle(height: 1.45, color: Color(0xffd5d8d2))),
                     const Divider(height: 30, color: Color(0x33ffffff)),
-                    const Row(children: [Icon(Icons.local_shipping_outlined, color: Colors.white), SizedBox(width: 10), Expanded(child: Text('Delivery across Ghana in 2–4 days', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)))]),
+                    const Row(children: [Icon(Icons.local_shipping_outlined, color: Colors.white), SizedBox(width: 10), Expanded(child: Text('Delivery across Ghana in 2–4 days', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)))]),
                   ]),
                 ),
               ),

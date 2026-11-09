@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from urllib.parse import urlparse
 
 import inttegro
-from inttegro import APIError, LineItemType, ProductType
+from inttegro import APIError
 
 
 # Inttegro integration map
@@ -41,11 +41,11 @@ class CheckoutInput:
 
 @dataclass(frozen=True)
 class CatalogSelection:
-    type: ProductType
+    type: inttegro.product.Type
     name: str
     about: str | None
     reference: str | None
-    price: inttegro.PriceParams
+    price: inttegro.price.InlineParams
 
 
 def parse_checkout_input(name: str, email: str, phone: str, attempt_id: str) -> CheckoutInput:
@@ -81,17 +81,17 @@ def select_catalog_product(product, price_id: str) -> CatalogSelection:
         name=product.name,
         about=product.about,
         reference=product.reference,
-        price=inttegro.PriceParams(currency=price.fixed_amount.currency, value=price.fixed_amount.value),
+        price=inttegro.price.InlineParams(currency=price.fixed_amount.currency, value=price.fixed_amount.value),
     )
 
 
-def build_order_request(value: CheckoutInput, origin: str, product: CatalogSelection) -> inttegro.orders.CreateRequest:
-    return inttegro.orders.CreateRequest(
+def build_order_request(value: CheckoutInput, origin: str, product: CatalogSelection) -> inttegro.order.CreateNewCustomerInput:
+    return inttegro.order.CreateNewCustomerInput(
         # INTTEGRO:DECISION [stable-idempotency-key] Reuse the key for retries of
         # this logical checkout. Production systems persist a cart- or booking-
         # derived key; creating a fresh key after a timeout permits duplicates.
         # https://studio.inttegro.com/idempotency
-        request_meta=inttegro.orders.RequestMeta(idempotency_key=f"demo-{value.attempt_id}"),
+        request_meta=inttegro.order.CreateNewCustomerInputRequestMeta(idempotency_key=f"demo-{value.attempt_id}"),
         # INTTEGRO:DECISION [merchant-order-number] Send a recognizable merchant
         # reference so Inttegro does not fall back to its generated or_ ID. The
         # validated attempt keeps this demo value stable across retries. A real
@@ -100,16 +100,16 @@ def build_order_request(value: CheckoutInput, origin: str, product: CatalogSelec
         # INTTEGRO:DECISION [inline-customer] customer_data matches this guest
         # flow. Account-based products should resolve customer_id on the trusted
         # server. The Orders API accepts exactly one customer representation.
-        customer_data=inttegro.orders.Customer(name=value.name, email_address=value.email, phone_number=value.phone),
+        customer_data=inttegro.customer.DataInput(name=value.name, email_address=value.email, phone_number=value.phone),
         # INTTEGRO:DECISION [finalize-on-create] The item and total are settled,
         # so finalization freezes the order and generates invoice formats in one
         # call. Use draft -> update -> finalize for mutable tax, inventory,
         # approval, shipping, or line items.
         finalize=True,
-        checkout_settings=inttegro.orders.CheckoutSettings(redirect_url=f"{origin}/complete", cancel_url=f"{origin}/cancel"),
-        line_items=[inttegro.orders.ProductLineItem(
-            type=LineItemType.PRODUCT,
-            product=inttegro.orders.Product(
+        checkout_settings=inttegro.order.CreateNewCustomerInputCheckoutSettings(redirect_url=f"{origin}/complete", cancel_url=f"{origin}/cancel"),
+        line_items=[inttegro.product.LineItemInput(
+            type=inttegro.order.LineItemType.PRODUCT,
+            product=inttegro.product.InlineDetailsInput(
                 # INTTEGRO:DECISION [catalog-snapshot] The service resolves the
                 # configured Product and Price and snapshots the verified fields
                 # into the Order for compatibility across SDK versions.

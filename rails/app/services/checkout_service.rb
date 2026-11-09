@@ -62,7 +62,7 @@ class CheckoutService
         name: product.name,
         about: product.about,
         reference: product.reference,
-        price: Inttegro::PriceParams.new(
+        price: Inttegro::Price::PriceParams.new(
           currency: price.fixed_amount.currency,
           value: price.fixed_amount.value
         )
@@ -139,7 +139,7 @@ class CheckoutService
       # price changes are observed. A high-volume service can add a short cache
       # with explicit invalidation. https://studio.inttegro.com/products
       product = catalog_selection(client.products.lookup(product_id: product_id), price_id)
-      order = client.orders.create(**order_params(checkout, public_origin, product))
+      order = client.orders.create(order_params(checkout, public_origin, product))
       # INTTEGRO:DECISION [returned-checkout-url] Use the response URL rather
       # than deriving one from order.id and undocumented routing conventions.
       checkout_url = order.invoice&.format_value&.web&.url

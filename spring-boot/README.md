@@ -17,7 +17,7 @@ Spring resolves and validates both before constructing the Order; the invoice
 form cannot choose its own service or amount. Run `mvn test` for the focused
 checks.
 
-The first command is temporarily required because version `5.0.0` of the Java
+The first command is temporarily required because version `11.1.1` of the Java
 SDK is documented but is not yet available from Maven Central. Once it is
 published, consumers can remove that local-install step without changing the
 demo code or dependency coordinate.
@@ -34,7 +34,7 @@ for the app-owned surface and Inttegro controller lifecycle.
 
 Render and Railway manifests plus a multi-stage Dockerfile are included, but no
 public button is shown yet. A reader-owned remote build cannot resolve Inttegro
-Java SDK 5.0.0 until that artifact is published. Publishing a button before that
+Java SDK 11.1.1 until that artifact is published. Publishing a button before that
 gate clears would advertise a broken path. See
 [`DEPLOYING.md`](../DEPLOYING.md) for the release gate.
 

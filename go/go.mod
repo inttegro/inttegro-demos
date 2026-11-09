@@ -1,8 +1,8 @@
 module github.com/zebodotdev/inttegro-demo-go
 
-go 1.25.0
+go 1.27.0
 
-require github.com/zebodotdev/inttegro-sdk-go/v4 v4.4.1
+require github.com/zebodotdev/inttegro-sdk-go/v4 v4.5.0
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect

@@ -7,7 +7,7 @@
     "deploy": "uv run pywrangler deploy"
   },
   "devDependencies": {
-    "wrangler": "4.129.0"
+    "wrangler": "4.158.0"
   },
   "cloudflare": {
     "bindings": {

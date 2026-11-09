@@ -120,12 +120,12 @@ func selectCatalogProduct(product *inttegro.Product, priceID string) (catalogSel
 		if price.ID != priceID {
 			continue
 		}
-		if !price.Active || price.FixedAmount == nil || price.FixedAmount.Value <= 0 {
+		if !price.Active || price.Nominal == nil || price.Nominal.Value <= 0 {
 			break
 		}
 		return catalogSelection{
 			Type: product.Type, Name: product.Name, About: product.About, Reference: product.Reference,
-			Price: inttegro.PriceParams{AmountParams: money.AmountParams{Currency: price.FixedAmount.Currency, Value: price.FixedAmount.Value}},
+			Price: inttegro.PriceParams{AmountParams: money.AmountParams{Currency: price.Nominal.Currency, Value: price.Nominal.Value}},
 		}, nil
 	}
 	return catalogSelection{}, &demoError{Code: "configuration_error", Message: "The configured demo price is not available for this product."}

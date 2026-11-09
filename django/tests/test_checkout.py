@@ -3,7 +3,8 @@ from types import SimpleNamespace
 
 from django.test import Client, SimpleTestCase, override_settings
 import inttegro
-from inttegro import Currency, ProductType
+from inttegro.money import Currency
+from inttegro.product import Type as ProductType
 
 from checkout.service import (
     CatalogSelection,
@@ -39,7 +40,7 @@ class CheckoutServiceTests(SimpleTestCase):
             name="Afterglow Sessions — Courtyard Admission",
             about="An evening of music and conversation.",
             reference="DEMO-AFTERGLOW-COURTYARD",
-            price=inttegro.PriceParams(currency=Currency.GHS, value=5000),
+            price=inttegro.price.InlineParams(currency=Currency.GHS, value=5000),
         )
         request = build_order_request(
             CheckoutInput("Akua", "akua@example.com", "+233", "attempt_123"),

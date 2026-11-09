@@ -11,10 +11,10 @@ class CheckoutServiceTest < ActiveSupport::TestCase
   test "builds the shared order request" do
     checkout = CheckoutService::Checkout.new(name: "Akua", email: "akua@example.com", phone: "+233", attempt_id: "attempt_123")
     product = {
-      type: Inttegro::ProductType::PHYSICAL,
+      type: Inttegro::Product::Type::PHYSICAL,
       name: "Dawn Brew Set",
       reference: "DEMO-KORA-DAWN-BREW",
-      price: Inttegro::PriceParams.new(currency: Inttegro::Currency::GHS, value: 5000)
+      price: Inttegro::Price::PriceParams.new(currency: Inttegro::Money::Currency::GHS, value: 5000)
     }
     request = CheckoutService.order_params(checkout, "https://demo.example", product)
     assert_equal "demo-attempt_123", request.dig(:request_meta, :idempotency_key)
@@ -22,22 +22,22 @@ class CheckoutServiceTest < ActiveSupport::TestCase
     assert_equal true, request[:finalize]
     assert_equal "https://demo.example/complete", request.dig(:checkout_settings, :redirect_url)
     assert_equal "Dawn Brew Set", request.dig(:line_items, 0, :product, :name)
-    assert_equal Inttegro::ProductType::PHYSICAL, request.dig(:line_items, 0, :product, :type)
+    assert_equal Inttegro::Product::Type::PHYSICAL, request.dig(:line_items, 0, :product, :type)
     assert_equal 5000, request.dig(:line_items, 0, :product, :price).value
   end
 
   test "selects only the configured active catalog price" do
     product = Inttegro::Product.new(
       id: "prod_demo",
-      type: Inttegro::ProductType::PHYSICAL,
+      type: Inttegro::Product::Type::PHYSICAL,
       name: "Dawn Brew Set",
       active: true,
-      created_at: "2026-09-06T00:00:00Z",
-      prices: [Inttegro::ProductPriceSummary.new(
+      created_at: Time.utc(2026, 9, 6),
+      prices: [Inttegro::Product::PriceSummary.new(
         id: "pr_demo",
         active: true,
         type: Inttegro::Price::Type::FIXED_AMOUNT,
-        fixed_amount: Inttegro::Amount.new(currency: Inttegro::Currency::GHS, value: 5000)
+        fixed_amount: Inttegro::Money::Amount.new(currency: Inttegro::Money::Currency::GHS, value: 5000)
       )]
     )
 

@@ -4,9 +4,9 @@ namespace App\Services;
 
 use Inttegro\APIError;
 use Inttegro\Client;
-use Inttegro\PriceParams;
-use Inttegro\Product;
-use Inttegro\ProductType;
+use Inttegro\Price\InlineParams;
+use Inttegro\Product\Product;
+use Inttegro\Product\Type as ProductType;
 use RuntimeException;
 
 /*
@@ -38,7 +38,7 @@ final class DemoError extends RuntimeException
 final class CheckoutService
 {
     /**
-     * @return array{type: ProductType, name: string, about: ?string, reference: ?string, price: PriceParams}
+     * @return array{type: ProductType, name: string, about: ?string, reference: ?string, price: InlineParams}
      */
     public static function catalogSelection(Product $product, string $priceId): array
     {
@@ -65,13 +65,13 @@ final class CheckoutService
             'name' => $product->name,
             'about' => $product->about,
             'reference' => $product->reference,
-            'price' => new PriceParams($selected->fixedAmount->currency, $selected->fixedAmount->value),
+            'price' => new InlineParams($selected->fixedAmount->currency, $selected->fixedAmount->value),
         ];
     }
 
     /**
      * @param array{name: string, email: string, phone: string, attempt_id: string} $checkout
-     * @param array{type: ProductType, name: string, about: ?string, reference: ?string, price: PriceParams} $product
+     * @param array{type: ProductType, name: string, about: ?string, reference: ?string, price: InlineParams} $product
      */
     public static function orderPayload(array $checkout, string $origin, array $product): array
     {
@@ -107,7 +107,7 @@ final class CheckoutService
                     // INTTEGRO:ALTERNATIVE [catalog-snapshot] When the SDK
                     // exposes the typed catalogue union, send product_id +
                     // price_id + quantity instead and omit the inline fields.
-                    'type' => $product['type'],
+                    'type' => $product['type']->value,
                     'name' => $product['name'],
                     'about' => $product['about'],
                     'reference' => $product['reference'],

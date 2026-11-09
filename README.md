@@ -8,7 +8,7 @@ identity.
 
 The repository is designed to live at `demos/` in the Commerce checkout. The
 web and server examples can also be cloned and run independently. Until the
-mobile SDKs and Java SDK 5.0.0 are published, the SwiftUI, Compose, Flutter,
+mobile SDKs and Java SDK 11.1.1 are published, the SwiftUI, Compose, Flutter,
 React Native, and Spring Boot examples resolve those SDKs from the parent
 Commerce checkout.
 

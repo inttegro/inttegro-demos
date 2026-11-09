@@ -920,7 +920,7 @@
           "id": "cloud-run",
           "recommendation": "alternative",
           "status": "blocked",
-          "reason": "The Java SDK 5.0.0 dependency must be publicly available before a Cloud Run source build can succeed.",
+          "reason": "The Java SDK 11.1.1 dependency must be publicly available before a Cloud Run source build can succeed.",
           "name": "Cloud Run",
           "icon": "/assets/providers/cloud-run.svg",
           "documentation": "https://cloud.google.com/run/docs/deploying-source-code"
@@ -938,7 +938,7 @@
           "id": "docker",
           "recommendation": "alternative",
           "status": "blocked",
-          "reason": "The Java SDK 5.0.0 dependency must be publicly available before the Docker image can build.",
+          "reason": "The Java SDK 11.1.1 dependency must be publicly available before the Docker image can build.",
           "name": "Docker",
           "icon": "/assets/providers/docker.svg",
           "documentation": "https://docs.docker.com/compose/gettingstarted/"
@@ -948,7 +948,7 @@
           "recommendation": "recommended",
           "status": "blocked",
           "config": "spring-boot/railway.json",
-          "reason": "The Java SDK 5.0.0 dependency must be publicly available before a reader-owned remote build can succeed.",
+          "reason": "The Java SDK 11.1.1 dependency must be publicly available before a reader-owned remote build can succeed.",
           "name": "Railway",
           "icon": "/assets/providers/railway.svg",
           "documentation": "https://docs.railway.com/templates/publish-and-share"
@@ -958,7 +958,7 @@
           "recommendation": "alternative",
           "status": "blocked",
           "config": "spring-boot/render.yaml",
-          "reason": "The Java SDK 5.0.0 dependency must be publicly available before a reader-owned remote build can succeed.",
+          "reason": "The Java SDK 11.1.1 dependency must be publicly available before a reader-owned remote build can succeed.",
           "name": "Render",
           "icon": "/assets/providers/render.svg",
           "documentation": "https://render.com/docs/deploy-to-render"

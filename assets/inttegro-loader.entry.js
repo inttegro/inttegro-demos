@@ -1,14 +1,14 @@
 /**
- * Audited public loader aligned with @inttegro/js v0.3.0.
+ * Audited public loader aligned with @inttegro/js v0.7.2.
  *
  * This file contains only the controlled-origin loader. The executable
  * Checkout runtime remains private and is downloaded only from Inttegro's
  * fixed origin.
- * Source: https://github.com/zebodotdev/js/blob/v0.3.0/packages/js/src/loader.ts
+ * Source: https://github.com/inttegro/js/blob/v0.7.2/packages/js/src/loader.ts
  */
-const INTTEGRO_JS_VERSION = "0.3.0";
+const INTTEGRO_JS_VERSION = "0.7.2";
 export const INTTEGRO_JS_URL =
-  "https://js.inttegro.com/inttegro.js@0.3.0";
+  "https://js.inttegro.com/inttegro.js@0.7.2";
 
 const LOAD_TIMEOUT_MS = 15_000;
 const SCRIPT_MARKER = "data-inttegro-js";

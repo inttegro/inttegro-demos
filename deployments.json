@@ -210,12 +210,12 @@
     {
       "id": "spring-boot",
       "providers": [
-        { "id": "docker", "recommendation": "alternative", "status": "blocked", "reason": "The Java SDK 5.0.0 dependency must be publicly available before the Docker image can build." },
-        { "id": "railway", "recommendation": "recommended", "status": "blocked", "config": "spring-boot/railway.json", "reason": "The Java SDK 5.0.0 dependency must be publicly available before a reader-owned remote build can succeed." },
-        { "id": "render", "recommendation": "alternative", "status": "blocked", "config": "spring-boot/render.yaml", "reason": "The Java SDK 5.0.0 dependency must be publicly available before a reader-owned remote build can succeed." },
+        { "id": "docker", "recommendation": "alternative", "status": "blocked", "reason": "The Java SDK 11.1.1 dependency must be publicly available before the Docker image can build." },
+        { "id": "railway", "recommendation": "recommended", "status": "blocked", "config": "spring-boot/railway.json", "reason": "The Java SDK 11.1.1 dependency must be publicly available before a reader-owned remote build can succeed." },
+        { "id": "render", "recommendation": "alternative", "status": "blocked", "config": "spring-boot/render.yaml", "reason": "The Java SDK 11.1.1 dependency must be publicly available before a reader-owned remote build can succeed." },
         { "id": "cloudflare", "recommendation": "alternative", "status": "blocked", "reason": "Spring Boot requires a JVM application runtime that Cloudflare Workers does not provide." },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "Spring Boot is not packaged for Vercel's serverless runtime in this release." },
-        { "id": "cloud-run", "recommendation": "alternative", "status": "blocked", "reason": "The Java SDK 5.0.0 dependency must be publicly available before a Cloud Run source build can succeed." },
+        { "id": "cloud-run", "recommendation": "alternative", "status": "blocked", "reason": "The Java SDK 11.1.1 dependency must be publicly available before a Cloud Run source build can succeed." },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers; the Java SDK is also not public." }
       ]
     },

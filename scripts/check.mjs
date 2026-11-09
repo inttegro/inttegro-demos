@@ -127,7 +127,7 @@ for (const value of ['embedded', 'modal', 'hosted']) {
   );
 }
 assert(
-  loaderEntry.includes('const INTTEGRO_JS_VERSION = "0.3.0"'),
+  loaderEntry.includes('const INTTEGRO_JS_VERSION = "0.7.2"'),
   'browser asset entry point must pin the reviewed public loader version',
 );
 assert(
@@ -135,7 +135,7 @@ assert(
   'presentation client must consume the generated public loader bundle',
 );
 assert(
-  loaderBundle.includes('https://js.inttegro.com/inttegro.js@0.3.0'),
+  loaderBundle.includes('https://js.inttegro.com/inttegro.js@0.7.2'),
   'public loader bundle must pin the reviewed Inttegro-hosted runtime',
 );
 assert(
@@ -285,8 +285,8 @@ for (const [id, adapter] of Object.entries(frameworkAdapters)) {
   );
   assert.equal(
     packageManifest.dependencies[adapter.packageName],
-    '0.2.0',
-    `${id} must pin ${adapter.packageName} 0.2.0`,
+    '0.7.2',
+    `${id} must pin ${adapter.packageName} 0.7.2`,
   );
   const source = readFileSync(join(demosRoot, adapter.source), 'utf8');
   assert(
@@ -486,13 +486,13 @@ const astroConfig = readFileSync(join(demosRoot, 'astro/astro.config.mjs'), 'utf
 const astroPackage = JSON.parse(readFileSync(join(demosRoot, 'astro/package.json'), 'utf8'));
 const astroCloudRun = JSON.parse(readFileSync(join(demosRoot, 'astro/app.json'), 'utf8'));
 assert(deployments.demos.some((demo) => demo.id === 'astro'), 'Astro deployment metadata must be published');
-assert.equal(astroPackage.dependencies.astro, '7.3.2', 'Astro must pin the verified framework release');
-assert.equal(astroPackage.dependencies['@astrojs/node'], '11.1.5', 'Astro must use the compatible official Node adapter');
+assert.equal(astroPackage.dependencies.astro, '7.4.7', 'Astro must pin the verified framework release');
+assert.equal(astroPackage.dependencies['@astrojs/node'], '11.1.11', 'Astro must use the compatible official Node adapter');
 for (const id of ['astro', 'nestjs', 'redwoodsdk']) {
   const appPackage = JSON.parse(readFileSync(join(demosRoot, id, 'package.json'), 'utf8'));
   assert.equal(
     appPackage.dependencies['@inttegro/inttegro-sdk'],
-    '11.2.0',
+    '14.1.1',
     `${id} must pin the customer-selected Price SDK release`,
   );
 }
@@ -592,7 +592,7 @@ for (const id of ['django', 'fastapi']) {
   const pyproject = readFileSync(join(demosRoot, id, 'pyproject.toml'), 'utf8');
   const readme = readFileSync(join(demosRoot, id, 'README.md'), 'utf8');
   assert(source.includes('AsyncInttegroClient'), `${id} must use the async SDK at its application boundary`);
-  assert(pyproject.includes('"inttegro==6.3.0"'), `${id} must require the async-first Python SDK`);
+  assert(pyproject.includes('"inttegro==14.1.1"'), `${id} must require the async-first Python SDK`);
   assert(
     readFileSync(join(demosRoot, `${id}/wrangler.jsonc`), 'utf8').includes('"python_workers"'),
     `${id} must opt into the Python Workers runtime`,

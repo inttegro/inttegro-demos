@@ -131,7 +131,7 @@ includes host-neutral Worker and static-asset configuration. Both Worker builds
 and their health, page, static asset, validation, and safe configuration-error
 paths have passed local workerd runtime checks.
 
-Spring Boot remains remote-deployment gated until Java SDK 5.0.0 is public. The
+Spring Boot remains remote-deployment gated until Java SDK 11.1.1 is public. The
 Dockerfile and provider manifests are checked in so the gate can be removed and
 verified without changing the integration example.
 

@@ -39,13 +39,13 @@ test('builds the Kora Market Dawn Brew Set order', () => {
     catalogSelection,
   );
 
-  assert.equal(request.request_meta?.idempotency_key, 'demo-attempt_123');
+  assert.equal(request.requestMeta?.idempotencyKey, 'demo-attempt_123');
   assert.equal(request.number, 'KORA-ATTEMPT-123');
   assert.equal(request.finalize, true);
-  assert.equal(request.checkout_settings?.redirect_url, 'https://demo.example/complete');
-  assert.equal(request.line_items?.[0]?.product?.name, 'Dawn Brew Set');
-  assert.equal(request.line_items?.[0]?.product?.type, 'physical');
-  assert.equal(request.line_items?.[0]?.product?.price.value, 5000);
+  assert.equal(request.checkoutSettings?.redirectUrl, 'https://demo.example/complete');
+  assert.equal(request.lineItems?.[0]?.product?.name, 'Dawn Brew Set');
+  assert.equal(request.lineItems?.[0]?.product?.type, 'physical');
+  assert.equal(request.lineItems?.[0]?.product?.price.value, 5000);
 });
 
 test('accepts only a client-generated mobile checkout attempt ID', () => {
@@ -69,13 +69,13 @@ test('builds a finalized mobile-money-only order on the server', () => {
     catalogSelection,
   );
 
-  assert.equal(request.request_meta?.idempotency_key, 'mobile-demo-mobile_attempt_123');
+  assert.equal(request.requestMeta?.idempotencyKey, 'mobile-demo-mobile_attempt_123');
   assert.equal(request.number, 'KORA-MOBILE-MOBILE-ATTEMPT-123');
-  assert.equal(request.customer_id, 'cus_demo');
+  assert.equal(request.customerId, 'cus_demo');
   assert.equal(request.finalize, true);
-  assert.deepEqual(request.payment_method_types, ['mobile_money']);
-  assert.equal(request.line_items?.[0]?.product?.name, 'Dawn Brew Set');
-  assert.equal(request.line_items?.[0]?.product?.price.value, 5000);
+  assert.deepEqual(request.paymentMethodTypes, ['mobile_money']);
+  assert.equal(request.lineItems?.[0]?.product?.name, 'Dawn Brew Set');
+  assert.equal(request.lineItems?.[0]?.product?.price.value, 5000);
 });
 
 test('selects only the configured active catalogue price', () => {
@@ -84,7 +84,7 @@ test('selects only the configured active catalogue price', () => {
     type: 'physical',
     name: 'Dawn Brew Set',
     active: true,
-    created_at: '2026-09-06T00:00:00Z',
+    createdAt: new Date('2026-09-06T00:00:00Z'),
     prices: [
       { id: 'pr_old', active: false, type: 'fixed_amount', fixedAmount: { currency: 'ghs', value: 4000 } },
       { id: 'pr_demo', active: true, type: 'fixed_amount', fixedAmount: { currency: 'ghs', value: 5000 } },
@@ -99,7 +99,7 @@ test('selects only the configured active catalogue price', () => {
       type: 'physical',
       name: 'Dawn Brew Set',
       active: true,
-      created_at: '2026-09-06T00:00:00Z',
+      createdAt: new Date('2026-09-06T00:00:00Z'),
       prices: [],
     }, 'pr_missing'),
     /configured demo price/,

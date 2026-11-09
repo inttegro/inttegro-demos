@@ -9,28 +9,28 @@
     "deploy": "uv run pywrangler deploy"
   },
   "dependencies": {
-    "@angular/common": "21.2.23",
-    "@angular/core": "21.2.23",
-    "@angular/platform-browser": "21.2.23",
-    "@inttegro/angular": "0.2.0",
-    "@inttegro/js": "0.2.0",
+    "@angular/common": "22.2.5",
+    "@angular/core": "22.2.5",
+    "@angular/platform-browser": "22.2.5",
+    "@inttegro/angular": "0.7.2",
+    "@inttegro/js": "0.7.2",
     "rxjs": "7.8.2",
-    "tslib": "2.8.1",
+    "tslib": "2.9.1",
     "zone.js": "0.16.3"
   },
   "devDependencies": {
-    "@angular/build": "21.2.23",
-    "@angular/cli": "21.2.23",
-    "@angular/compiler": "21.2.23",
-    "@angular/compiler-cli": "21.2.23",
-    "typescript": "5.9.3",
-    "wrangler": "4.129.0"
+    "@angular/build": "22.2.6",
+    "@angular/cli": "22.2.6",
+    "@angular/compiler": "22.2.5",
+    "@angular/compiler-cli": "22.2.5",
+    "typescript": "6.0.3",
+    "wrangler": "4.158.0"
   },
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
   "overrides": {
-    "sharp": "0.35.4"
+    "sharp": "0.35.5"
   },
   "cloudflare": {
     "bindings": {

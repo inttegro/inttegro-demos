@@ -1,9 +1,6 @@
 <script lang="ts">
   import { loadInttegro } from '@inttegro/js'
-  import {
-    Checkout,
-    type CheckoutErrorEvent,
-  } from '@inttegro/svelte'
+  import { Checkout } from '@inttegro/svelte'
   import { onMount, tick } from 'svelte'
 
   type CheckoutPresentation = 'embedded' | 'modal'
@@ -92,7 +89,7 @@
             ?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'nearest' })
         })
       } else {
-        // @inttegro/svelte 0.2.0 embeds Checkout. The Svelte application owns
+        // @inttegro/svelte 0.7.2 embeds Checkout. The Svelte application owns
         // this accessible dialog; the forthcoming adapter-managed modal is an
         // alternative once that package version is publicly released.
         await tick()
@@ -127,7 +124,7 @@
     setFormFeedback('Payment window closed. Your campaign details are still here.')
   }
 
-  function handleCheckoutError(error: CheckoutErrorEvent | Error) {
+  function handleCheckoutError(error: Error) {
     const message = errorMessage(error)
     surfaceMessage = message
     surfaceMessageKind = 'error'
@@ -200,7 +197,7 @@
     return payload.orderId
   }
 
-  function errorMessage(error: CheckoutErrorEvent | Error | unknown) {
+  function errorMessage(error: unknown) {
     if (error instanceof Error) return error.message
     if (isRecord(error) && isRecord(error.error) && typeof error.error.message === 'string') {
       return error.error.message

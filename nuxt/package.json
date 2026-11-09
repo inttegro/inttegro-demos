@@ -15,16 +15,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@inttegro/inttegro-sdk": "7.0.0",
-    "@inttegro/vue": "0.2.0",
-    "nuxt": "4.5.2",
-    "vue": "3.5.42"
+    "@inttegro/inttegro-sdk": "14.1.1",
+    "@inttegro/vue": "0.7.2",
+    "nuxt": "4.6.4",
+    "vue": "3.5.45"
   },
   "devDependencies": {
     "typescript": "6.0.3",
-    "vitest": "^4.1.0",
-    "vue-tsc": "3.3.11",
-    "wrangler": "4.129.0"
+    "vitest": "5.1.0",
+    "vue-tsc": "3.3.14",
+    "wrangler": "4.158.0"
   },
   "engines": { "node": ">=24.11" },
   "cloudflare": {

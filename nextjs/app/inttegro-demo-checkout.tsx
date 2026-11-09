@@ -11,8 +11,8 @@ import { useEffect } from 'react';
 
 type AdapterOptions = Pick<
   CheckoutProps,
-  'appearance' | 'features' | 'locale' | 'orderId' | 'timeout' | 'title'
->;
+  'appearance' | 'features' | 'locale' | 'timeout' | 'title'
+> & { orderId: string };
 
 type AdapterController = {
   ready: Promise<void>;
@@ -63,11 +63,7 @@ function createAdapter(): NonNullable<Window['InttegroDemoCheckoutAdapter']> {
           onError={(error) => {
             if (settled) return;
             settled = true;
-            rejectReady(
-              error instanceof Error
-                ? error
-                : new Error(error.error.message),
-            );
+            rejectReady(error);
           }}
         />,
       );

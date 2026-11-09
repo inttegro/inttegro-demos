@@ -15,15 +15,18 @@
     "check": "npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
-    "@astrojs/node": "11.1.5",
-    "@inttegro/inttegro-sdk": "11.2.0",
-    "astro": "7.3.2"
+    "@astrojs/node": "11.1.11",
+    "@inttegro/inttegro-sdk": "14.1.1",
+    "astro": "7.4.7"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
+    "@astrojs/check": "0.9.12",
     "@types/node": "24.10.1",
-    "tsx": "4.23.13",
+    "tsx": "4.23.15",
     "typescript": "6.0.3"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
   },
   "engines": {
     "node": ">=24"

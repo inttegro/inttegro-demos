@@ -4,10 +4,17 @@ import { installInttegroDemoCheckoutAdapter } from './inttegro-demo-checkout';
 installInttegroDemoCheckoutAdapter();
 const { handleResponse, onHydrated } = initClientNavigation();
 let presentationLoaded = false;
+let demoUiLoaded = false;
 initClient({
   handleResponse,
   onHydrated(meta) {
     onHydrated(meta);
+    if (!demoUiLoaded) {
+      demoUiLoaded = true;
+      const demoUiScript = document.createElement('script');
+      demoUiScript.src = '/demo-ui.js';
+      document.head.appendChild(demoUiScript);
+    }
     if (!presentationLoaded) {
       presentationLoaded = true;
       const presentationScript = document.createElement('script');

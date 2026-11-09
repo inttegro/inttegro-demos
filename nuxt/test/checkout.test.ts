@@ -19,10 +19,10 @@ describe('Nuxt checkout', () => {
       'https://demo.example',
       catalogSelection,
     );
-    expect(request.request_meta?.idempotency_key).toBe('demo-attempt_123');
+    expect(request.requestMeta?.idempotencyKey).toBe('demo-attempt_123');
     expect(request.number).toBe('KORA-ATTEMPT-123');
     expect(request.finalize).toBe(true);
-    const lineItem = request.line_items[0];
+    const lineItem = request.lineItems[0];
     expect(lineItem?.type).toBe('product');
     if (!lineItem || lineItem.type !== 'product') throw new Error('expected a product line item');
     expect(lineItem.product.name).toBe('Dawn Brew Set');
@@ -36,7 +36,7 @@ describe('Nuxt checkout', () => {
       type: 'physical',
       name: 'Dawn Brew Set',
       active: true,
-      created_at: '2026-09-06T00:00:00Z',
+      createdAt: new Date('2026-09-06T00:00:00Z'),
       prices: [{
         id: 'pr_demo',
         active: false,

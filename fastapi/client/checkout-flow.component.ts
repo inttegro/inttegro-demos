@@ -10,7 +10,6 @@ import {
 } from '@angular/core'
 import {
   CheckoutComponent,
-  type CheckoutErrorEvent,
 } from '@inttegro/angular'
 import { loadInttegro } from '@inttegro/js'
 
@@ -179,9 +178,8 @@ export class CheckoutFlowComponent implements OnInit, AfterViewInit, OnDestroy {
             })
         })
       } else {
-        // @inttegro/angular 0.2.0 embeds Checkout. Angular owns this accessible
-        // dialog until an adapter release with managed-modal presentation is
-        // available from the public registry.
+        // Angular owns this application dialog and the adapter owns the
+        // embedded Checkout lifecycle mounted inside it.
         this.modalDialog?.nativeElement.showModal()
       }
       this.setFormFeedback('')
@@ -219,7 +217,7 @@ export class CheckoutFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  handleCheckoutError(error: CheckoutErrorEvent | Error): void {
+  handleCheckoutError(error: Error): void {
     const message = errorMessage(error)
     this.surfaceMessage = message
     this.surfaceMessageKind = 'error'
@@ -294,7 +292,7 @@ async function parseOrderResponse(response: Response): Promise<string> {
   return payload['orderId']
 }
 
-function errorMessage(error: CheckoutErrorEvent | Error | unknown): string {
+function errorMessage(error: unknown): string {
   if (error instanceof Error) return error.message
   if (
     isRecord(error) &&

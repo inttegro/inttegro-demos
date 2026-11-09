@@ -35,14 +35,14 @@ export type CatalogSelection = {
 };
 
 type CatalogBackedCreateOrderRequest = {
-  request_meta: { idempotency_key: string };
+  requestMeta: { idempotencyKey: string };
   number: string;
-  customer_data: { name: string; email_address: string; phone_number: string };
+  customerData: { name: string; emailAddress: string; phoneNumber: string };
   finalize: true;
-  checkout_settings: { redirect_url: string; cancel_url: string };
-  line_items: Array<{
+  checkoutSettings: { redirectUrl: string; cancelUrl: string };
+  lineItems: Array<{
     type: 'product';
-    product: { product_id: string; price_id: string; quantity: number };
+    product: { productId: string; priceId: string; quantity: number };
   }>;
 };
 
@@ -105,7 +105,7 @@ export function buildOrderRequest(
     // browser-rendered attempt. A production system persists a key derived from
     // its cart/reservation; generating a fresh key during a retry allows duplicates.
     // https://studio.inttegro.com/idempotency
-    request_meta: { idempotency_key: `demo-${input.attemptId}` },
+    requestMeta: { idempotencyKey: `demo-${input.attemptId}` },
     // INTTEGRO:DECISION [merchant-order-number] Set a human-facing merchant
     // reference so Inttegro does not use its generated or_ ID as the order
     // number. The validated attempt makes this demo value stable across retries.
@@ -114,26 +114,26 @@ export function buildOrderRequest(
     // INTTEGRO:DECISION [inline-customer] Guest ticketing uses customer_data.
     // Resolve a stored customer_id server-side for account-based journeys; the
     // Orders API accepts exactly one customer representation.
-    customer_data: {
+    customerData: {
       name: input.name,
-      email_address: input.email,
-      phone_number: input.phone,
+      emailAddress: input.email,
+      phoneNumber: input.phone,
     },
     // INTTEGRO:DECISION [finalize-on-create] The reservation total is settled.
     // For mutable tax, inventory, approval, or line items, create a draft, make
     // the updates, and call the finalize operation only at the commitment point.
     finalize: true,
-    checkout_settings: {
-      redirect_url: `${publicOrigin}/complete`,
-      cancel_url: `${publicOrigin}/cancel`,
+    checkoutSettings: {
+      redirectUrl: `${publicOrigin}/complete`,
+      cancelUrl: `${publicOrigin}/cancel`,
     },
-    line_items: [{
+    lineItems: [{
       type: 'product',
       product: {
         // Preserve catalog identity so product analytics, order filters, and
         // refund attribution can join this order line back to its source.
-        product_id: product.productId,
-        price_id: product.priceId,
+        productId: product.productId,
+        priceId: product.priceId,
         quantity: 1,
       },
     }],
@@ -172,11 +172,9 @@ export async function createHostedCheckout(input: CheckoutInput, requestOrigin: 
     // INTTEGRO:FLOW [catalog-lookup] Fetch at checkout time so publication and
     // price changes are observed. High-volume services can add a short cache
     // with an explicit invalidation policy. https://studio.inttegro.com/products
-    const product = selectCatalogProduct(await client.products.lookup({ product_id: productId }), priceId);
+    const product = selectCatalogProduct(await client.products.lookup({ productId }), priceId);
     const request = buildOrderRequest(input, publicOrigin(requestOrigin), product);
-    // SDK 7 predates the catalog-reference request union already accepted by
-    // the API. Remove this compatibility cast after upgrading the demo SDK.
-    const order = await client.orders.create(request as unknown as CreateOrderRequest);
+    const order = await client.orders.create(request satisfies CreateOrderRequest);
     // INTTEGRO:DECISION [returned-checkout-url] Use the server response rather
     // than constructing a URL from order.id and undocumented routing details.
     const checkoutUrl = order.invoice?.format?.web?.url;

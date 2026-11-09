@@ -55,11 +55,14 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
   // it cannot swap catalogue records or tamper with the price.
   if (!product.active) throw new DemoError('configuration_error', 'The configured demo product is not active.');
   const price = product.prices?.find(candidate => candidate.id === priceId && candidate.active);
+  const fixedAmount = price && 'fixedAmount' in price ? price.fixedAmount : undefined;
   if (
     !price
+    || !('type' in price)
     || price.type !== 'fixed_amount'
-    || !Number.isSafeInteger(price.fixedAmount.value)
-    || price.fixedAmount.value <= 0
+    || !fixedAmount
+    || !Number.isSafeInteger(fixedAmount.value)
+    || fixedAmount.value <= 0
   ) {
     throw new DemoError('configuration_error', 'The configured demo price is not active for this product.');
   }
@@ -68,7 +71,7 @@ export function selectCatalogProduct(product: Product, priceId: string): Catalog
     name: product.name,
     ...(product.about ? { about: product.about } : {}),
     ...(product.reference ? { reference: product.reference } : {}),
-    price: price.fixedAmount,
+    price: fixedAmount,
   };
 }
 
@@ -78,7 +81,7 @@ export function buildOrderRequest(input: CheckoutInput, origin: string, product:
     // same logical checkout. Production systems should persist a cart- or
     // invoice-derived key; a fresh random key per network retry permits duplicates.
     // https://studio.inttegro.com/idempotency
-    request_meta: { idempotency_key: `demo-${input.attemptId}` },
+    requestMeta: { idempotencyKey: `demo-${input.attemptId}` },
     // INTTEGRO:DECISION [merchant-order-number] Supply a recognizable merchant
     // reference rather than accepting Inttegro's generated or_ ID fallback. The
     // demo derives it from the validated attempt so replayed requests agree.
@@ -87,13 +90,13 @@ export function buildOrderRequest(input: CheckoutInput, origin: string, product:
     // INTTEGRO:DECISION [inline-customer] customer_data fits this guest flow.
     // Account-based products should resolve customer_id on the server; the
     // Orders API accepts exactly one of these representations.
-    customer_data: { name: input.name, email_address: input.email, phone_number: input.phone },
+    customerData: { name: input.name, emailAddress: input.email, phoneNumber: input.phone },
     // INTTEGRO:DECISION [finalize-on-create] This fixed cart is complete, so one
     // call freezes the order and creates invoice formats. If shipping, tax,
     // inventory, or approval is pending, create a draft and finalize later.
     finalize: true,
-    checkout_settings: { redirect_url: `${origin}/complete`, cancel_url: `${origin}/cancel` },
-    line_items: [{
+    checkoutSettings: { redirectUrl: `${origin}/complete`, cancelUrl: `${origin}/cancel` },
+    lineItems: [{
       type: 'product',
       product: {
         // INTTEGRO:DECISION [catalog-snapshot] The service looks up the configured
@@ -138,7 +141,7 @@ export async function createHostedCheckout(
     // price changes are observed. A high-volume app may use a short bounded cache
     // with explicit invalidation rather than an unbounded process-lifetime cache.
     // https://studio.inttegro.com/products
-    const product = selectCatalogProduct(await client.products.lookup({ product_id: productId }), priceId);
+    const product = selectCatalogProduct(await client.products.lookup({ productId }), priceId);
     const order = await client.orders.create(buildOrderRequest(input, publicOrigin, product));
     // INTTEGRO:DECISION [returned-checkout-url] Use the URL in the response;
     // constructing one from order.id relies on undocumented routing details.

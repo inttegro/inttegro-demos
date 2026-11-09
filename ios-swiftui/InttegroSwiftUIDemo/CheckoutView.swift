@@ -362,7 +362,8 @@ struct CheckoutView: View {
         switch result {
         case .completed: outcome = "Payment submitted. We’ll verify it before fulfillment."
         case .canceled: outcome = "Checkout paused. Your Dawn Brew Set is still in the bag."
-        case let .failed(failure): outcome = "Payment unavailable (\(failure.code))."
+        case let .failed(event):
+            outcome = "Payment unavailable (\(event.failure?.code ?? "payment_sheet_failed"))."
         }
     }
 }
@@ -467,7 +468,7 @@ private struct StudioScreenshotPaymentSheetAdapter: PaymentSheetAdapter {
         session _: PaymentSheetSession
     ) async throws -> PaymentSheetPaymentOutcome {
         try await Task.sleep(for: .seconds(30))
-        return .completed(paymentID: "py_studio_screenshot")
+        return .completed()
     }
 
     private static func confirmationChallenge() -> PaymentSheetConfirmationChallenge {

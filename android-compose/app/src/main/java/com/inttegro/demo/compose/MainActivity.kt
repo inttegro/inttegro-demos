@@ -373,8 +373,9 @@ private fun KoraMarketScreen() {
                 checkoutFlowId = null
                 outcome = when (result) {
                     is PaymentSheetResult.Completed -> "Payment submitted. We’ll verify it before fulfillment."
-                    PaymentSheetResult.Canceled -> "Checkout paused. Your Dawn Brew Set is still in the bag."
-                    is PaymentSheetResult.Failed -> "Payment unavailable (${result.error.code})."
+                    is PaymentSheetResult.Canceled -> "Checkout paused. Your Dawn Brew Set is still in the bag."
+                    is PaymentSheetResult.Failed ->
+                        "Payment unavailable (${result.event.failure?.code ?: "payment_sheet_failed"})."
                 }
             },
         )

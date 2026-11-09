@@ -2,6 +2,7 @@ import {
   addPaymentSheetTelemetryListener,
   initializePaymentSheet,
   presentPaymentSheet,
+  type PaymentSheetEvent,
   type PaymentSheetResult,
 } from "@inttegro/react-native";
 import { StatusBar } from "expo-status-bar";
@@ -261,16 +262,18 @@ function newAttemptId(): string {
   return `rn_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
 }
 
-function describe(result: PaymentSheetResult): string {
+type DemoPaymentSheetResult = PaymentSheetResult | (PaymentSheetEvent & { type: "completed" });
+
+function describe(result: DemoPaymentSheetResult): string {
   // INTTEGRO:VERIFY [server-side-verification] This immediate result controls UI
   // only. Before fulfillment, the merchant backend must look up the owner-scoped
   // Order. Use bounded polling plus reconciliation while merchant-facing
   // webhooks are unavailable: https://studio.inttegro.com/webhooks.
-  if (result.status === "completed")
+  if (result.type === "completed")
     return "Payment submitted. We’ll verify it before fulfillment.";
-  if (result.status === "canceled")
+  if (result.type === "canceled")
     return "Checkout paused. Your Dawn Brew Set is still in the bag.";
-  return `Payment unavailable (${result.error.code}).`;
+  return `Payment unavailable (${result.failure.code}).`;
 }
 
 const styles = StyleSheet.create({

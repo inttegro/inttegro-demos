@@ -13,13 +13,13 @@
   },
   "dependencies": {
     "@inttegro/react-native": "file:../../sdks/react-native",
-    "expo": "57.0.19",
-    "expo-status-bar": "57.0.1",
-    "react": "19.2.8",
-    "react-native": "0.87.1"
+    "expo": "58.0.23",
+    "expo-status-bar": "58.0.4",
+    "react": "19.3.0",
+    "react-native": "0.88.1"
   },
   "devDependencies": {
-    "@types/react": "19.2.18",
-    "typescript": "7.0.2"
+    "@types/react": "19.3.0",
+    "typescript": "6.0.3"
   }
 }

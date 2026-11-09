@@ -136,7 +136,7 @@ class _KoraProductScreenState extends State<KoraProductScreen> {
       _status = switch (result) {
         PaymentSheetCompleted() => 'Payment submitted. We’ll verify it before fulfillment.',
         PaymentSheetCanceled() => 'Checkout paused. Your Dawn Brew Set is still in the bag.',
-        PaymentSheetFailed(:final code) => 'Payment unavailable ($code).',
+        PaymentSheetFailed(:final failure) => 'Payment unavailable (${failure.code}).',
       };
     } on Object catch (error) {
       _status = error is StateError ? error.message.toString() : 'Payment is temporarily unavailable.';

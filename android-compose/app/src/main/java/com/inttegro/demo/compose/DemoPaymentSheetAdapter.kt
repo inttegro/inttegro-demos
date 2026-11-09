@@ -84,7 +84,7 @@ object DemoPaymentSheetAdapter : PaymentSheetAdapter {
         configuration: PaymentSheetConfiguration,
         session: PaymentSheetSession,
     ): PaymentSheetPaymentOutcome =
-        PaymentSheetPaymentOutcome.Completed("pay_android_documentation")
+        PaymentSheetPaymentOutcome.Completed()
 
     private fun confirmationChallenge() = PaymentSheetConfirmationChallenge(
         paymentId = "pay_android_documentation",

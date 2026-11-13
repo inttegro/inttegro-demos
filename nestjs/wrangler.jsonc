@@ -4,6 +4,9 @@
   "main": "cloudflare/worker.js",
   "compatibility_date": "2026-11-13",
   "workers_dev": true,
+  "routes": [
+    { "pattern": "nestjs-demo.inttegro.dev", "custom_domain": true }
+  ],
   "observability": { "enabled": true },
   "containers": [
     {

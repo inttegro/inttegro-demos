@@ -168,13 +168,13 @@
     },
     {
       "id": "rails",
-      "live": { "status": "verified", "provider": "railway", "url": "https://rails-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://rails-demo.inttegro.dev" },
       "additionalEnvironment": ["SECRET_KEY_BASE"],
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "rails/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "rails/railway.json", "templateId": "CssQzr" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "rails/render.yaml" },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "rails/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "rails/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "Rails is not packaged for Vercel's serverless runtime in this release." },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "rails/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
@@ -182,13 +182,13 @@
     },
     {
       "id": "laravel",
-      "live": { "status": "verified", "provider": "railway", "url": "https://laravel-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://laravel-demo.inttegro.dev" },
       "additionalEnvironment": ["APP_KEY"],
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "laravel/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "laravel/railway.json", "templateId": "p5qiP5" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "laravel/render.yaml" },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "laravel/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "laravel/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "Laravel is not packaged for Vercel's serverless runtime in this release." },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "laravel/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
@@ -196,12 +196,12 @@
     },
     {
       "id": "go",
-      "live": { "status": "verified", "provider": "railway", "url": "https://go-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://go-demo.inttegro.dev" },
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "go/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "go/railway.json", "templateId": "ABT6ae" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "go/render.yaml" },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "go/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "go/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "This release preserves the long-running net/http service rather than repackaging it as a Vercel function." },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "go/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
@@ -221,13 +221,13 @@
     },
     {
       "id": "nestjs",
-      "live": { "status": "verified", "provider": "railway", "url": "https://nestjs-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://nestjs-demo.inttegro.dev" },
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "nestjs/compose.yaml" },
         { "id": "render", "recommendation": "recommended", "status": "prepared", "config": "nestjs/render.yaml" },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "nestjs/app.json" },
         { "id": "railway", "recommendation": "alternative", "status": "blocked", "config": "nestjs/railway.json", "reason": "The checked-in Railway configuration is ready, but a public one-click template has not been published yet." },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "nestjs/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "nestjs/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "This release preserves NestJS as a portable Node service instead of a Vercel function." },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
       ]
@@ -247,13 +247,13 @@
     },
     {
       "id": "astro",
-      "live": { "status": "verified", "provider": "railway", "url": "https://astro-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://astro-demo.inttegro.dev" },
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "astro/compose.yaml" },
         { "id": "render", "recommendation": "recommended", "status": "prepared", "config": "astro/render.yaml" },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "astro/app.json" },
         { "id": "railway", "recommendation": "alternative", "status": "blocked", "config": "astro/railway.json", "reason": "The checked-in Railway configuration is ready, but a public one-click template has not been published yet." },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "astro/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "astro/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "This release preserves Astro as a portable Node service instead of a Vercel function." },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
       ]

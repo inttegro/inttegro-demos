@@ -1,6 +1,6 @@
 const origins = new Map([
-  ['django-demo.inttegro.dev', 'https://django-production-a1c6.up.railway.app'],
-  ['fastapi-demo.inttegro.dev', 'https://fastapi-production-9417.up.railway.app'],
+  ['django-demo.inttegro.dev', 'https://inttegro-django-demo.true-sense-inc.workers.dev'],
+  ['fastapi-demo.inttegro.dev', 'https://inttegro-fastapi-demo.true-sense-inc.workers.dev'],
   ['go-demo.inttegro.dev', 'https://go-production-cfa9.up.railway.app'],
   ['laravel-demo.inttegro.dev', 'https://laravel-production-133f.up.railway.app'],
   ['rails-demo.inttegro.dev', 'https://rails-production-8bb0.up.railway.app'],

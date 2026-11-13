@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "inttegro-laravel-demo",
+  "main": "cloudflare/worker.js",
+  "compatibility_date": "2026-11-13",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "containers": [
+    {
+      "class_name": "AppContainer",
+      "scheduling_policy": "durable_object",
+      "images": {
+        "base": { "dockerfile": "./Dockerfile", "build_context": "." }
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "APP_CONTAINER", "class_name": "AppContainer" }]
+  },
+  "exports": {
+    "AppContainer": { "type": "durable-object", "storage": "sqlite" }
+  }
+}

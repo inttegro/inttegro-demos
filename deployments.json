@@ -141,7 +141,7 @@
     },
     {
       "id": "django",
-      "live": { "status": "verified", "provider": "railway", "url": "https://django-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://django-demo.inttegro.dev" },
       "additionalEnvironment": ["DJANGO_SECRET_KEY", "DJANGO_ALLOWED_HOSTS", "DJANGO_CSRF_TRUSTED_ORIGINS"],
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "django/compose.yaml" },
@@ -149,20 +149,20 @@
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "django/render.yaml" },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "django/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "django/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "django/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "Django is not packaged for Vercel's Python runtime in this release." }
       ]
     },
     {
       "id": "fastapi",
-      "live": { "status": "verified", "provider": "railway", "url": "https://fastapi-demo.inttegro.dev" },
+      "live": { "status": "verified", "provider": "cloudflare", "url": "https://fastapi-demo.inttegro.dev" },
       "providers": [
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "fastapi/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "fastapi/railway.json", "templateId": "wk2B6a" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "fastapi/render.yaml" },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "fastapi/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "fastapi/wrangler.jsonc" },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "verified", "config": "fastapi/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "FastAPI is not packaged for Vercel's Python runtime in this release." }
       ]
     },
@@ -174,7 +174,7 @@
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "rails/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "rails/railway.json", "templateId": "CssQzr" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "rails/render.yaml" },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "blocked", "reason": "Rails requires a Ruby application runtime that Cloudflare Workers does not provide." },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "rails/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "Rails is not packaged for Vercel's serverless runtime in this release." },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "rails/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
@@ -188,7 +188,7 @@
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "laravel/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "laravel/railway.json", "templateId": "p5qiP5" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "laravel/render.yaml" },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "blocked", "reason": "Laravel requires a PHP application runtime that Cloudflare Workers does not provide." },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "laravel/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "Laravel is not packaged for Vercel's serverless runtime in this release." },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "laravel/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
@@ -201,7 +201,7 @@
         { "id": "docker", "recommendation": "alternative", "status": "prepared", "config": "go/compose.yaml" },
         { "id": "railway", "recommendation": "recommended", "status": "prepared", "config": "go/railway.json", "templateId": "ABT6ae" },
         { "id": "render", "recommendation": "alternative", "status": "prepared", "config": "go/render.yaml" },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "blocked", "reason": "This release does not include a WebAssembly or Worker adapter for the net/http application." },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "go/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "This release preserves the long-running net/http service rather than repackaging it as a Vercel function." },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "go/app.json" },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
@@ -227,7 +227,7 @@
         { "id": "render", "recommendation": "recommended", "status": "prepared", "config": "nestjs/render.yaml" },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "nestjs/app.json" },
         { "id": "railway", "recommendation": "alternative", "status": "blocked", "config": "nestjs/railway.json", "reason": "The checked-in Railway configuration is ready, but a public one-click template has not been published yet." },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "blocked", "reason": "This NestJS application does not include a Cloudflare Worker HTTP adapter." },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "nestjs/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "This release preserves NestJS as a portable Node service instead of a Vercel function." },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
       ]
@@ -253,7 +253,7 @@
         { "id": "render", "recommendation": "recommended", "status": "prepared", "config": "astro/render.yaml" },
         { "id": "cloud-run", "recommendation": "alternative", "status": "prepared", "config": "astro/app.json" },
         { "id": "railway", "recommendation": "alternative", "status": "blocked", "config": "astro/railway.json", "reason": "The checked-in Railway configuration is ready, but a public one-click template has not been published yet." },
-        { "id": "cloudflare", "recommendation": "alternative", "status": "blocked", "reason": "This Astro application uses the standalone Node adapter and does not include a Cloudflare Worker adapter." },
+        { "id": "cloudflare", "recommendation": "alternative", "status": "prepared", "config": "astro/wrangler.jsonc" },
         { "id": "vercel", "recommendation": "alternative", "status": "blocked", "reason": "This release preserves Astro as a portable Node service instead of a Vercel function." },
         { "id": "app-runner", "recommendation": "experimental", "status": "blocked", "reason": "AWS App Runner is no longer available to new AWS customers, and this release has no public ECR image." }
       ]

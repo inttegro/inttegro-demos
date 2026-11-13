@@ -3,7 +3,7 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --no-progress --prefer-dist --no-scripts
 
-FROM php:8.3-cli
+FROM php:8.5.12-cli
 ENV APP_ENV=production \
     APP_DEBUG=false \
     SESSION_DRIVER=cookie

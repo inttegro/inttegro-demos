@@ -5,7 +5,7 @@
   "description": "Hosted checkout demo for the Inttegro PHP SDK and Laravel.",
   "license": "MIT",
   "require": {
-    "php": "^8.3",
+    "php": "^8.4.1",
     "inttegro/sdk": "14.1.1",
     "laravel/framework": "^13.0"
   },

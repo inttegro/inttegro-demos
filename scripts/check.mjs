@@ -576,6 +576,11 @@ for (const id of ['django', 'fastapi', 'redwoodsdk']) {
 }
 assert(existsSync(join(demosRoot, 'catalog/wrangler.jsonc')), 'catalogue must be ready for Cloudflare Static Assets');
 assert(existsSync(join(demosRoot, 'hosting/railway-edge/wrangler.jsonc')), 'Railway-hosted demos must define their first-party edge routes');
+const railsCloudflareWorker = readFileSync(join(demosRoot, 'rails/cloudflare/worker.js'), 'utf8');
+assert(
+  railsCloudflareWorker.includes('readinessHeaders: { "x-forwarded-proto": "https" }'),
+  'Rails Cloudflare readiness must preserve the external HTTPS scheme',
+);
 
 for (const configPath of [
   'nextjs/wrangler.jsonc', 'nuxt/wrangler.jsonc', 'express/wrangler.jsonc',

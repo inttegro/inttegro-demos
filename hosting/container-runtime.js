@@ -16,7 +16,11 @@ function runtimeEnvironment(bindings, port) {
   return environment;
 }
 
-export function createContainerClass({ port, readinessPath = "/health" }) {
+export function createContainerClass({
+  port,
+  readinessPath = "/health",
+  readinessHeaders = {},
+}) {
   return class AppContainer extends DurableObject {
     constructor(ctx, env) {
       super(ctx, env);
@@ -67,6 +71,7 @@ export function createContainerClass({ port, readinessPath = "/health" }) {
       for (let attempt = 0; attempt < STARTUP_ATTEMPTS; attempt += 1) {
         try {
           const response = await tcpPort.fetch(`http://container${readinessPath}`, {
+            headers: readinessHeaders,
             signal: AbortSignal.timeout(1_000),
           });
           await response.body?.cancel();

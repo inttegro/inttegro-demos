@@ -23,10 +23,16 @@ def test_rejects_invalid_email():
 
 
 def test_static_assets_resolve_from_the_application_root():
-    from app.main import STATIC_ROOT
+    from app.main import STATIC_ROOT, render_home, render_result
 
     assert STATIC_ROOT == Path(__file__).resolve().parents[1] / "public" / "static"
     assert (STATIC_ROOT / "checkout-presentations.js").is_file()
+    home = render_home("attempt_123", "validation_error", r"\g<0><invalid>")
+    assert 'value="attempt_123"' in home
+    assert r"\g&lt;0&gt;&lt;invalid&gt;" in home
+    assert "{%" not in render_result(True)
+    assert "Reservation received" in render_result(True)
+    assert "Reservation paused" in render_result(False)
 
 
 def test_builds_shared_order_request():

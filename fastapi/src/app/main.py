@@ -1,7 +1,9 @@
 import os
 import asyncio
 from contextlib import asynccontextmanager
+from html import escape
 from pathlib import Path
+import re
 from typing import Any, AsyncIterator
 from urllib.parse import urlencode
 from uuid import uuid4
@@ -9,7 +11,6 @@ from uuid import uuid4
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from inttegro import AsyncInttegroClient
 
 from .checkout import DemoError, create_hosted_checkout, parse_checkout_input
@@ -24,6 +25,13 @@ from .checkout import DemoError, create_hosted_checkout, parse_checkout_input
 
 ROOT = Path(__file__).resolve().parent
 STATIC_ROOT = ROOT.parents[1] / "public" / "static"
+TEMPLATE_ROOT = ROOT / "templates"
+HOME_ERROR_BLOCK = re.compile(
+    r'{% if error_code == "configuration_error" %}.*?{% endif %}', re.DOTALL
+)
+RESULT_CONDITIONAL = re.compile(
+    r"{% if complete %}(.*?){% else %}(.*?){% endif %}", re.DOTALL
+)
 
 
 @asynccontextmanager
@@ -56,7 +64,39 @@ if STATIC_ROOT.is_dir():
     # Assets are intentionally absent from the Worker filesystem and intercept
     # /static/* before the ASGI application runs.
     app.mount("/static", StaticFiles(directory=STATIC_ROOT), name="static")
-templates = Jinja2Templates(directory=ROOT / "templates")
+
+
+def render_home(attempt_id: str, error_code: str, error_message: str) -> str:
+    """Render the demo shell without native template-engine dependencies."""
+
+    source = (TEMPLATE_ROOT / "home.html").read_text()
+    if error_code == "configuration_error":
+        error_section = (
+            '<section class="setup-card has-config-error" role="status">'
+            '<span class="setup-kicker">Setup required</span>'
+            "<h3>Connect this copy to Inttegro</h3>"
+            "<p>Add <code>INTTEGRO_API_KEY</code> as a server-side secret, set the active Product and Price IDs plus this deployment’s public URL, then redeploy. The key never belongs in browser JavaScript.</p>"
+            '<div class="setup-actions"><a href="https://studio.inttegro.com/keys">Create an API key</a>'
+            '<a href="https://github.com/inttegro/inttegro-demos/blob/fastapi-v1.8.3/fastapi/README.md#deploy-your-own">Deployment guide</a></div>'
+            "</section>"
+        )
+    elif error_code:
+        error_section = (
+            '<p class="inline-error" role="alert"><strong>'
+            f"{escape(error_code)}:</strong> {escape(error_message)}</p>"
+        )
+    else:
+        error_section = ""
+
+    rendered = HOME_ERROR_BLOCK.sub(lambda _: error_section, source, count=1)
+    return rendered.replace("{{ attempt_id }}", escape(attempt_id, quote=True))
+
+
+def render_result(complete: bool) -> str:
+    """Resolve the result page's fixed complete/cancel copy."""
+
+    source = (TEMPLATE_ROOT / "result.html").read_text()
+    return RESULT_CONDITIONAL.sub(lambda match: match.group(1 if complete else 2), source)
 
 
 def runtime_setting(request: Request, name: str) -> str:
@@ -92,11 +132,11 @@ async def inttegro_client(request: Request) -> AsyncInttegroClient:
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse(request, "home.html", {
-        "attempt_id": uuid4().hex,
-        "error_code": request.query_params.get("code", ""),
-        "error_message": request.query_params.get("message", ""),
-    })
+    return HTMLResponse(render_home(
+        uuid4().hex,
+        request.query_params.get("code", ""),
+        request.query_params.get("message", ""),
+    ))
 
 
 @app.post("/checkout")
@@ -136,12 +176,12 @@ async def checkout(request: Request, name: str = Form(), email: str = Form(), ph
 
 @app.get("/complete", response_class=HTMLResponse)
 async def complete(request: Request):
-    return templates.TemplateResponse(request, "result.html", {"complete": True})
+    return HTMLResponse(render_result(True))
 
 
 @app.get("/cancel", response_class=HTMLResponse)
 async def cancel(request: Request):
-    return templates.TemplateResponse(request, "result.html", {"complete": False})
+    return HTMLResponse(render_result(False))
 
 
 @app.get("/health", response_class=JSONResponse)

@@ -41,19 +41,6 @@ version = "14.1.1"
 wheels = [{ url = "https://files.pythonhosted.org/packages/07/4d/e938466e5218962768a7018b0500e1c06d03096182821853177a14003d54/inttegro-14.1.1-py3-none-any.whl", upload-time = 2026-11-08T13:05:41Z, size = 710190, hashes = { sha256 = "bb819c79e0756fad75493aa824c5fb3a4428e9f921ed3c4c21140daf84b300f8" } }]
 
 [[packages]]
-name = "jinja2"
-version = "3.1.6"
-wheels = [
-    { url = "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/jinja2-3.1.6-py3-none-any.whl", hashes = { sha256 = "24fc60a3ea3669f4d0d69a82f4b8032188b61ae1840dcb5dbe7525b6613ebbdd" } },
-    { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hashes = { sha256 = "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67" } },
-]
-
-[[packages]]
-name = "markupsafe"
-version = "3.0.2"
-wheels = [{ url = "https://cdn.jsdelivr.net/pyodide/v0.28.3/full/markupsafe-3.0.2-cp313-cp313-pyodide_2025_0_wasm32.whl", hashes = { sha256 = "31a48bf0c5914d64d442175520d803c6488681882ff152c3a07838736b1f3b60" } }]
-
-[[packages]]
 name = "opentelemetry-api"
 version = "1.45.2"
 wheels = [{ url = "https://files.pythonhosted.org/packages/a9/2d/610db864d7513158cebb8f36cc88e67e73bd6c7aa1905ef18d89e1281c81/opentelemetry_api-1.45.2-py3-none-any.whl", upload-time = 2026-10-29T17:29:06Z, size = 60335, hashes = { sha256 = "2cbd737377e710ee740d261c94e93fa0f08e6d037c18f17513cc0a2d94479a34" } }]

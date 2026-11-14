@@ -8,7 +8,7 @@
     "dev:cloudflare": "uv run pywrangler dev",
     "predeploy": "npm run build:client",
     "deploy": "uv run pywrangler deploy",
-    "deploy:cloudflare": "python3 -m uv run pywrangler deploy"
+    "deploy:cloudflare": "python3 -m uv run pywrangler sync --force && python3 -m uv run pywrangler deploy"
   },
   "dependencies": {
     "@angular/common": "22.2.5",

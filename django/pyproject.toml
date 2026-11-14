@@ -7,11 +7,11 @@ dependencies = [
   "django==6.1.3",
   "inttegro==14.1.1",
   "whitenoise==6.12.0",
+  "workers-py>=1.17.1",
+  "workers-runtime-sdk",
 ]
 
 [dependency-groups]
 dev = [
   "uvicorn[standard]==0.54.0",
-  "workers-py>=1.17.1",
-  "workers-runtime-sdk",
 ]

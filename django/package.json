@@ -6,7 +6,7 @@
     "build:cloudflare": "python3 -m pip install --user --upgrade uv==0.13.4",
     "dev:cloudflare": "npm run build && uv run pywrangler dev",
     "deploy": "uv run pywrangler deploy",
-    "deploy:cloudflare": "UV_LINK_MODE=copy python3 -m uv run pywrangler sync --force && test -s python_modules/workers/__init__.py && python3 -m uv run pywrangler deploy"
+    "deploy:cloudflare": "export PATH=\"$(python3 -m site --user-base)/bin:$PATH\" && UV_LINK_MODE=copy uv run pywrangler sync --force && test -s python_modules/workers/__init__.py && uv run pywrangler deploy"
   },
   "devDependencies": {
     "wrangler": "4.162.0"

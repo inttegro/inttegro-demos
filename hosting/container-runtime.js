@@ -1,6 +1,7 @@
 import { DurableObject } from "cloudflare:workers";
 
-const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+const INACTIVITY_TIMEOUT_MS = 6 * 60 * 60 * 1000;
+const PRIMARY_CONTAINER_NAME = "primary";
 const STARTUP_ATTEMPTS = 300;
 const STARTUP_RETRY_MS = 200;
 
@@ -99,10 +100,18 @@ export function createContainerClass({
   };
 }
 
-export function createContainerWorker(bindingName) {
+export function createContainerWorker(bindingName, keepalivePath = "/health") {
   return {
     fetch(request, env) {
-      return env[bindingName].getByName("primary").fetch(request);
+      return env[bindingName].getByName(PRIMARY_CONTAINER_NAME).fetch(request);
+    },
+
+    async scheduled(_controller, env) {
+      const response = await env[bindingName].getByName(PRIMARY_CONTAINER_NAME).fetch(
+	`https://keepalive.internal${keepalivePath}`,
+      );
+      await response.body?.cancel();
+      if (!response.ok) throw new Error(`Container keepalive returned ${response.status}`);
     },
   };
 }

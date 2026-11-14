@@ -8,6 +8,7 @@
     { "pattern": "astro-demo.inttegro.dev", "custom_domain": true }
   ],
   "observability": { "enabled": true },
+  "triggers": { "crons": ["*/5 * * * *"] },
   "containers": [
     {
       "class_name": "AppContainer",

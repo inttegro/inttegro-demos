@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "build:client": "ng build checkout-client",
+    "build:cloudflare": "python3 -m pip install --user --upgrade uv==0.13.4 && npm run build:client",
     "predev:cloudflare": "npm run build:client",
     "dev:cloudflare": "uv run pywrangler dev",
     "predeploy": "npm run build:client",
-    "deploy": "uv run pywrangler deploy"
+    "deploy": "uv run pywrangler deploy",
+    "deploy:cloudflare": "python3 -m uv run pywrangler deploy"
   },
   "dependencies": {
     "@angular/common": "22.2.5",

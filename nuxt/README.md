@@ -47,7 +47,9 @@ Use `docker compose down` to stop it. A public deployment must replace
 Cloudflare is the recommended target and builds through Nitro's Cloudflare
 preset. Its Worker configuration keeps Nitro's generated Node shims in charge
 instead of layering Cloudflare's runtime shims over them; this avoids a startup
-conflict around `node:buffer`. Vercel keeps Nuxt's provider-aware production
+conflict around `node:buffer`. Inttegro's live service runs these checked-in
+build and deploy scripts directly in Cloudflare Builds from `main`; it does not
+need an external CI deploy token. Vercel keeps Nuxt's provider-aware production
 build. Both buttons use an immutable deployment ref derived from
 the published `nuxt-v1.8.3` deployment ref. See
 [`DEPLOYING.md`](../DEPLOYING.md) for readiness

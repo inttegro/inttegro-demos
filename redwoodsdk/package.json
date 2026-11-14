@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
+    "build:cloudflare": "npm run build",
     "dev": "vite dev",
     "preview": "vite preview",
     "deploy:cloudflare": "wrangler deploy",

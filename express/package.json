@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
+    "build:cloudflare": "npm run build",
     "start": "node dist/src/server.js",
     "deploy:cloudflare": "wrangler deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv worker-configuration.d.ts",
